@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Local infobases and lab sources (never versioned)
+lab*/
+test/
+
+# Machine-specific configuration: absolute paths and credentials
+.v8-project.json
+.opencode/opencode.json
+.opencode/1c-testpilot.profiles.yaml

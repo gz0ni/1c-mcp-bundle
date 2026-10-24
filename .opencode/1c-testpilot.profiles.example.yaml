@@ -1,0 +1,31 @@
+# Testpilot connection profiles (example).
+# Copy to 1c-testpilot.profiles.yaml and adjust paths.
+#
+# Credentials: pass an empty password by OMITTING the key.
+# lab2 uses a Cyrillic user name, lab3 a Latin one — they are not interchangeable.
+
+profiles:
+  lab1:
+    description: Lab 1 — file infobase, no users
+    base: '/absolute/path/to/repo/lab1'
+    exe: '/Users/<you>/.local/1cv8/8.3.27.1606/1cv8c'
+    version: '8.3.27.1606'
+    wait: 120
+
+  lab2:
+    description: Lab 2 — file infobase, user in Cyrillic
+    base: '/absolute/path/to/repo/lab2'
+    exe: '/Users/<you>/.local/1cv8/8.3.27.1606/1cv8c'
+    version: '8.3.27.1606'
+    user: 'админ'
+    password: ''
+    wait: 120
+
+  lab3:
+    description: Lab 3 — file infobase
+    base: '/absolute/path/to/repo/lab3'
+    exe: '/Users/<you>/.local/1cv8/8.3.27.1606/1cv8c'
+    version: '8.3.27.1606'
+    user: 'admin'
+    password: ''
+    wait: 120

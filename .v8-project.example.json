@@ -1,0 +1,34 @@
+{
+  "v8path": "/Users/<you>/.local/1cv8/8.3.27.1606/1cv8",
+  "databases": [
+    {
+      "id": "lab1",
+      "name": "Lab 1",
+      "type": "file",
+      "path": "/absolute/path/to/repo/lab1",
+      "configSrc": "/absolute/path/to/repo/lab1/src",
+      "aliases": ["lab1"]
+    },
+    {
+      "id": "lab2",
+      "name": "Lab 2",
+      "type": "file",
+      "path": "/absolute/path/to/repo/lab2",
+      "user": "админ",
+      "password": "",
+      "configSrc": "/absolute/path/to/repo/lab2/src",
+      "aliases": ["lab2"]
+    },
+    {
+      "id": "lab3",
+      "name": "Lab 3",
+      "type": "file",
+      "path": "/absolute/path/to/repo/lab3",
+      "user": "admin",
+      "password": "",
+      "configSrc": "/absolute/path/to/repo/lab3/src",
+      "aliases": ["lab3"]
+    }
+  ],
+  "default": "lab3"
+}

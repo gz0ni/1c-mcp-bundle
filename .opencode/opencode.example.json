@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "1c-testpilot": {
+        "type": "local",
+        "command": ["{env:HOME}/.local/bin/1c-testpilot"],
+        "environment": {
+          "TC1C_TRANSPORT": "stdio",
+          "TC_PLATFORM_VERSION": "8.3.27.1606",
+          "TC1C_PLATFORM_EXE": "{env:HOME}/.local/1cv8/8.3.27.1606/1cv8c",
+          "TC1C_PROFILES_FILE": "/absolute/path/to/repo/.opencode/1c-testpilot.profiles.yaml"
+        }
+      },
+      "1c-toolkit": {
+        "type": "remote",
+        "url": "http://127.0.0.1:6003/mcp",
+        "oauth": false
+      }
+    }
+  }
+}
