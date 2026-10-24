@@ -15,15 +15,17 @@ The repository is a **toolchain bundle**, not a coursework archive. Infobases (`
 | `.opencode/1c-testpilot.profiles.example.yaml` | Launch profiles for the test client |
 | `.v8-project.example.json` | Database registry consumed by the `db-*` skills |
 
-## Hard rule: code comes only from the methodichkas
+## Rule: code comes from the methodichkas
 
-The teacher's PDFs (`labN/src/*.pdf`) are the only authorized source of code, object names, and step order. Listings in those PDFs are **images**, not text, so pages must be rendered and read with vision:
+The teacher's PDFs (`labN/src/*.pdf`) are the baseline for code, object names, and step order. Listings in those PDFs are **images**, not text, so pages must be rendered and read with vision:
 
 ```bash
 pdftoppm -r 200 -png -f 12 -l 12 "lab3/src/Лабораторная работа №3 (2022-2023).pdf" /tmp/page
 ```
 
-Do not add anything beyond the methodichka. If a step is missing or unreadable, ask instead of guessing. See `.agents/rules.md`.
+Allowed: renames and literal changes required by the variant, plus small fixes to make the printed code run.
+
+Forbidden: adding functionality, objects, attributes, or algorithms that the methodichka does not describe, and restructuring a working solution. If a step is missing or unreadable, ask instead of guessing. See `.agents/rules.md`.
 
 ## Prerequisites
 

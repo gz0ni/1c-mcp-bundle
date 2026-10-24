@@ -17,12 +17,12 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 
 <!-- New entries go here, newest first. -->
 
-### Methodichkas are the only authorized source of code (2026-10-24)
+### Methodichka is the baseline; variant-driven edits are allowed (2026-10-24)
 
-- Decision: reproduce code exactly as printed in the teacher's PDFs; nothing else is allowed, even if technically better.
-- Reason: the teacher penalizes initiative outside the methodology. The grade depends on matching the methodichka, not on code quality.
-- Alternatives considered: writing idiomatic 1C from general knowledge (rejected — penalized), "improving" the printed code (rejected — same).
-- Consequences: every implementation task starts by reading the relevant PDF page as an image. Missing steps are escalated to the user instead of guessed.
+- Decision: start from the code printed in the teacher's PDF; permit only changes the variant requires (renames of procedures/functions/variables, literals, small fixes to make it run).
+- Reason: the teacher penalizes unauthorized additions, but the variant itself requires adaptation. Pure copying would fail the assignment.
+- Alternatives considered: exact transcription only (rejected — breaks variant requirements), free-form idiomatic 1C (rejected — penalized).
+- Consequences: every implementation task starts by reading the relevant PDF page as an image; deviations are justified by the variant, never by taste. Missing steps are escalated to the user.
 
 ### Repository is a toolchain bundle, not a coursework archive (2026-10-24)
 

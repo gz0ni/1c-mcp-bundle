@@ -18,7 +18,7 @@ Read [.agents/AGENTS.md](.agents/AGENTS.md) before any work. It links to:
 
 ## Non-Negotiable Facts
 
-- **Code comes only from the methodichkas.** The teacher's PDFs in `labN/src/` are the single source of truth for code, object names, UI steps, and order of operations. Code there is embedded as images, so render the page and read it with vision — never reproduce it from memory. Do not add anything beyond the methodichka. If a step is missing or unreadable, stop and ask.
+- **Code comes only from the methodichkas.** The teacher's PDFs in `labN/src/` are the baseline for code, object names, UI steps, and order of operations. Code there is embedded as images, so render the page and read it with vision — never reproduce it from memory. Variant-driven changes (renaming a procedure, function, or variable, changing literals, small fixes needed to make the printed code run) are allowed; inventing functionality, objects, attributes, or algorithms is not. If a step is missing or unreadable, stop and ask.
 - 1C platform: `/opt/1cv8t/8.3.27.1606/`; use the symlinks `~/.local/1cv8/8.3.27.1606/1cv8` and `1cv8c`, never the `/Applications` stubs.
 - Base credentials: lab1 — no users; lab2 — `админ` (Cyrillic); lab3 — `admin` (Latin). Passwords are empty, and an empty password must be omitted, never passed as `/P ""`.
 - Skills invoke `python`; the shim `~/.local/bin/python` must exist.

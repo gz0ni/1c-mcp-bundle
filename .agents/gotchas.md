@@ -22,11 +22,11 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 - Root cause: the teacher exported listings as screenshots ("Microsoft: Print To PDF"), so the code exists only as pixels.
 - Avoid: render the page with `pdftoppm -r 200 -png -f N -l N` and read the PNG with vision. Never reconstruct code from memory or from general 1C knowledge.
 
-### Methodichka is the only allowed source of code (2026-10-24)
+### No invented functionality beyond the methodichka (2026-10-24)
 
-- Any code that is not literally in the teacher's PDF is treated as unauthorized initiative and penalized, even if correct.
+- Unauthorized additions are penalized even when they are correct 1C. Variant-driven edits (renaming a procedure, function, or variable, changing literals, small fixes to make the printed code run) are allowed.
 - Root cause: course policy, not a technical constraint.
-- Avoid: transcribe exactly, do not rename or add attributes, and stop to ask when a step is missing. See `.agents/rules.md`.
+- Avoid: start from the printed code, change only what the variant requires, do not add objects/attributes/algorithms the methodichka does not describe, and stop to ask when a step is missing. See `.agents/rules.md`.
 
 ### `1Cv8Log` does not reveal base users (2026-10-24)
 

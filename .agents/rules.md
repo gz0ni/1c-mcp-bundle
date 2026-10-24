@@ -4,13 +4,18 @@ Coding, testing, and workflow conventions specific to this project. Static rules
 
 ## Source of Truth: Methodichkas
 
-- The **only** source of code, object names, attribute names, UI steps, and order of operations is the teacher's methodical instructions (PDF) shipped with each lab.
+- The **baseline** for code, object names, attribute names, UI steps, and order of operations is the teacher's methodical instructions (PDF) shipped with each lab.
 - Location: `labN/src/*.pdf` (e.g. `lab3/src/Лабораторная работа №3 (2022-2023).pdf`). They are intentionally not versioned — `lab*/` is gitignored.
 - **Code in these PDFs is images, not text.** `pdftotext` returns zero `Процедура` / `Функция` matches; the listings are screenshots. Render the page to PNG and read it with vision.
-- Reproduce code **exactly** as printed: same identifiers, same order, same literals. Do not rename, reformat, "improve", or add attributes that the methodichka does not show.
+- Reproduce the printed code as the starting point: same structure, same order, same logic.
+- **Allowed deviations** (still anchored to the methodichka):
+  - renames required by the variant — procedure, function, variable, object names;
+  - literal and value changes required by the variant;
+  - small fixes needed to make the printed code actually run in this configuration.
+- **Forbidden:** adding functionality, objects, attributes, checks, or algorithms that the methodichka does not describe; restructuring the solution; "improving" code that already works.
 - If a step is missing, ambiguous, or the image is unreadable — stop and ask the user. Do not fill gaps from general 1C knowledge.
 - Cite the source in the answer: file name and page number.
-- The teacher penalizes work that goes beyond the methodichka, even when it is technically better.
+- The teacher penalizes unauthorized additions, even when they are technically better. Variant-driven edits are fine; self-invented features are not.
 
 ## Code Style
 
