@@ -60,4 +60,5 @@ Coding, testing, and workflow conventions specific to this project. Static rules
 
 - Do not commit, push, create PRs, or run destructive git operations without explicit user request.
 - Before any commit (if requested): check `git status`, `git diff`, `git log --oneline -10`; stage only intended files.
-- This workspace is not a git repository at the moment.
+- Remote: `origin` = `git@github.com:gz0ni/1c-mcp-bundle.git`, branch `main`.
+- Never stage `lab*/`, `test/`, `.v8-project.json`, `.opencode/opencode.json`, or `.opencode/1c-testpilot.profiles.yaml` — they are gitignored for a reason.

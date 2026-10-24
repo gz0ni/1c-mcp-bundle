@@ -19,8 +19,10 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 ## Open
 
 - [ ] Start `MCP_Toolkit.epf` inside 1C and confirm `1c-toolkit` connects on port 6003.
+- [ ] Add the Windows-MCP server when the Windows machine is set up (deliberately not in this repo yet).
 - [ ] Dump `lab1` configuration to `lab1/src` if it is going to be edited (no `src/` yet).
 - [ ] Confirm the `macos` MCP `Type` tool can enter text into the 1C login dialog (only `Shortcut`/`Click` were exercised).
+- [ ] Fill `lab4`–`lab8` when the coursework reaches them; add their PDFs to `labN/src/`.
 - [ ] Decide whether to keep `lab1` in the registry without credentials or add a user to the base.
 
 ## In Progress
@@ -44,3 +46,6 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 - [x] Verify the `db-dump-xml` skill end-to-end on lab3.
 - [x] Fix Screen Recording permission for `screencapture`.
 - [x] Create `.agents/` journals and root `AGENTS.md`.
+- [x] Initialize the git repository and push to `git@github.com:gz0ni/1c-mcp-bundle.git` (`main`).
+- [x] Add the methodichka rule (code only from the teacher's PDFs, listings are images).
+- [x] Create `lab4`–`lab8` and keep all lab folders out of git.

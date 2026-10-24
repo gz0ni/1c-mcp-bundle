@@ -25,8 +25,8 @@ The point of the toolchain is to let an agent read and modify 1C configurations 
 
 - `name:` workspace folder `1c`, not a package.
 - `version:` n/a.
-- `org:` personal coursework, no remote.
-- Not a git repository (as of 2026-10-24). Do not assume git commands work.
+- `org:` personal coursework.
+- Git repository: `git@github.com:gz0ni/1c-mcp-bundle.git`, branch `main`. The repository holds the toolchain only; `lab1`–`lab8` and `test` are gitignored.
 
 ## Dependencies
 

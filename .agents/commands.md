@@ -126,7 +126,7 @@ python .opencode/skills/cf-info/scripts/cf-info.py -ConfigPath lab3/src
 
 ## CI
 
-None. Not a git repository.
+None. The repository has no workflows.
 
 ## Tests
 
