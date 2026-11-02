@@ -85,6 +85,7 @@ Skills read `v8path` from the registry but expect the agent to resolve the base 
 - No git, no CI, no tests.
 - `macos` MCP cannot use AppleScript (TCC).
 - `agent-desktop` is installed but never exercised against a live 1C client on this host; whether 1C exposes a usable UIA tree is still unknown.
+- Superseded (2026-11-02): probed on both hosts. Windows reads a real UIA tree (73 refs on the lab1 configurator) but tree nodes are read-only; macOS exposes nothing (3 refs on the thin client). See `.agents/gotchas.md`.
 
 ## Roadmap
 

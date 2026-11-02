@@ -19,9 +19,7 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 ## Open
 
 - [ ] Start `MCP_Toolkit.epf` inside 1C and confirm `1c-toolkit` connects on port 6003. **Blocked on macOS (2026-11-02):** the EPF's transport add-in is a Windows `PE32+` DLL, so the built-in server cannot load here. Do this on the Windows machine with `tools/MCP_Toolkit.epf`.
-- [x] Probe `agent-desktop` on the macOS host and decide whether to install it there. **Done 2026-11-02 — fail, skipped.** Thin client from a bare binary: `ref_count` 3 (Close/Minimize/Full Screen, English names). Thick client from the bundle: `snapshot` → `TIMEOUT` / `global_window_inventory_unstable`, window absent from `list-windows`. 1C exposes no AX tree on macOS, so the `macos` MCP stays the input path. Numbers in `.agents/gotchas.md`, commands in `.agents/commands.md`.
 - [ ] Add the Windows-MCP server when the Windows machine is set up (deliberately not in this repo yet). Same trip can close the `MCP_Toolkit` item.
-- [x] Confirm the `agent-desktop` UIA tree for a live 1C client on Windows. Done 2026-11-02 on the lab1 configurator: 73-99 refs, readable Russian names, menus and the configuration tree are exposed, but tree nodes only advertise `SetFocus` and their `Expand`/`Click` return `E_NOTIMPL`. Semantic clicks work on window chrome; the tree has to be driven with `press` and `--headed` mouse. Details in `.agents/gotchas.md`.
 - [ ] Dump `lab1` configuration to `lab1/src` if it is going to be edited (no `src/` yet).
 - [ ] Confirm the `macos` MCP `Type` tool can enter text into the 1C login dialog (only `Shortcut`/`Click` were exercised).
 - [ ] Fill `lab4`–`lab8` when the coursework reaches them; add their PDFs to `labN/src/`.
@@ -52,3 +50,5 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 - [x] Add the methodichka rule (code only from the teacher's PDFs, listings are images).
 - [x] Create `lab4`–`lab8` and keep all lab folders out of git.
 - [x] Install `agent-desktop` 1.0.2 project-local for the Windows host (`npm run setup` links the native binary) and its two skills into `.agents/skills/`. Verified: `status` reports accessibility granted, snapshot on Calculator returned 56 refs, `click` on `Семь` moved the display to `7`.
+- [x] Probe `agent-desktop` on the macOS host. **2026-11-02 — fail, skipped.** Thin client from a bare binary: `ref_count` 3 (Close/Minimize/Full Screen, English names). Thick client from the bundle: `snapshot` → `TIMEOUT` / `global_window_inventory_unstable`, window absent from `list-windows`. 1C publishes no AX tree on macOS, so `macos` MCP stays the input path there.
+- [x] Confirm the `agent-desktop` UIA tree for a live 1C client on Windows. 2026-11-02 on the lab1 configurator: 73-99 refs, readable Russian names, menus and the configuration tree are exposed, but tree nodes only advertise `SetFocus` and their `Expand`/`Click` return `E_NOTIMPL`. Semantic clicks work on window chrome; the tree has to be driven with `press` and `--headed` mouse.

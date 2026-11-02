@@ -38,7 +38,7 @@ The point of the toolchain is to let an agent read and modify 1C configurations 
 | 1c-testpilot | MCP server driving a live `/TESTCLIENT` |
 | macos-mcp | Accessibility tree, clicks, typing, screenshots on macOS |
 | 1c-mcp-toolkit | Remote MCP at `http://127.0.0.1:6003/mcp`, served by `MCP_Toolkit.epf` inside 1C |
-| agent-desktop 1.0.2 (npm, project-local) | Desktop GUI control on Windows: UIA snapshot with refs, headless clicks, windows, clipboard. Used because no `macos` MCP exists on the Windows host |
+| agent-desktop 1.0.2 (npm, project-local) | Desktop GUI control on the Windows host: UIA snapshot with refs, headless clicks, windows, clipboard. Not used on macOS — the probe showed 1C publishes no AX tree there (`.agents/gotchas.md`) |
 
 ## Design Basis
 

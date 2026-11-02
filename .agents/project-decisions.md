@@ -37,6 +37,7 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 - Reason: on macOS it reads the same Accessibility API as the `macos` MCP, so it adds no new capability, only refs and targeted `find`/`is`/`get` instead of a full snapshot. That is worth a TCC Accessibility grant and a second GUI path only if 1C exposes a real tree. The recorded "no AX" finding came from launching the bare binary, and 1C is used as a `.app` bundle, so the premise needs re-checking.
 - Alternatives considered: installing anyway (adds a grant, a duplicate path, and a false expectation), skipping outright (loses a possible 10x token saving on verification steps).
 - Consequences: probe commands and the pass/fail rule live in `.agents/todo.md`; `agent-desktop-macos` is not installed; on macOS the desktop input path stays `macos` MCP until the probe fails or passes.
+- Outcome (2026-11-02): the probe failed on both launch paths (3 refs for the thin client, `TIMEOUT` for the bundle-launched thick client). Kept as history; the decision below records the final verdict.
 
 ### agent-desktop installed project-local for the Windows host (2026-11-02)
 
