@@ -15,7 +15,34 @@ command -v python && python -V        # /Users/gz0ni/.local/bin/python, 3.13.16
 cd /Users/gz0ni/Documents/Work/Languages/1c && opencode mcp list
 ```
 
-Expected `opencode mcp list`: `1c-testpilot`, `macos`, `agentmemory`, `context7`, `github`, `gsheets`, `opencode_console` connected; `1c-toolkit` failed with `ECONNREFUSED` unless `MCP_Toolkit.epf` is running.
+Expected `opencode mcp list`: `1c-testpilot`, `macos`, `context7`, `github`, `gsheets`, `opencode_console` connected; `agentmemory` connected only while its daemon runs (see `.agents/gotchas.md`); `1c-toolkit` failed with `ECONNREFUSED`. On this Mac that failure is permanent: `MCP_Toolkit.epf` serves the server through a Windows-only native add-in (see `.agents/gotchas.md`). `1c-toolkit` becomes usable only on the Windows host.
+
+## Open the MCP Toolkit and start its server (Windows only)
+
+```bash
+cd /Users/gz0ni/Documents/Work/Languages/1c
+~/.local/1cv8/8.3.27.1606/1cv8c ENTERPRISE /F$PWD/lab1 /Execute "$PWD/tools/MCP_Toolkit.epf" -DisableStartupDialogs
+```
+
+Then click "Запустить сервер" in the form (`Порт встроенного сервера: 6003`, `Запуск...`). Check with
+`lsof -nP -iTCP:6003 -sTCP:LISTEN` and `curl -m 3 http://127.0.0.1:6003/mcp`.
+
+macOS result (2026-11-02): the form opens, both security dialogs have to be accepted with Да, and the
+button then logs `Не удалось подключить внешнюю компоненту MCPHttp` — the add-in is a Windows PE DLL.
+Do not debug the port on macOS.
+
+## Desktop probe with agent-desktop (macOS)
+
+```bash
+cd /Users/gz0ni/Documents/Work/Languages/1c
+npx -y agent-desktop status
+npx -y agent-desktop list-apps
+npx -y agent-desktop snapshot --app 1cv8c -i --compact   # thin client, bare binary
+```
+
+Measured 2026-11-02: `accessibility: granted`, `screen_recording: granted`; the thin client exposes
+`ref_count: 3` (Close / Minimize / Full Screen only); the thick client started from the bundle makes
+`snapshot` time out with `global_window_inventory_unstable`. Verdict: fail, keep the `macos` MCP.
 
 ## Open a base in the designer (GUI)
 

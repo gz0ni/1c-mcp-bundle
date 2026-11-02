@@ -16,6 +16,27 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### `agentmemory` MCP times out when its daemon is not running (2026-11-02)
+
+- `opencode mcp list` showed `agentmemory failed: Request timed out`, while the `npx @agentmemory/mcp` process was alive (two PIDs under `~/.npm/_npx`).
+- Root cause: the MCP server is a thin client for the agentmemory daemon (global config, `~/.config/opencode/opencode.json`, local `npx -y @agentmemory/mcp`); with no daemon listening, every call hangs until the timeout.
+- Avoid: start the agentmemory daemon before relying on memory tools; the process being present in `pgrep` does not mean the MCP is usable. This is a global-config tool, not a repo one — do not add it to `.opencode/opencode.json`.
+
+### `MCP_Toolkit` built-in server cannot start on macOS: the transport is a Windows DLL (2026-11-02)
+
+- Opened `tools/MCP_Toolkit.epf` in lab1, clicked "Запустить сервер"; the form log showed `Не удалось подключить внешнюю компоненту MCPHttp` and the status stayed `Отключено`, nothing listened on 6003.
+- Root cause: the add-in behind the built-in server is `MCPToolkit/Templates/MCPHttpTransport/Ext/Template.bin`, `PE32+ executable (DLL) x86-64, for MS Windows`. There is no macOS binary in the EPF, so `ПодключитьВнешнююКомпоненту` always fails. `MCP_Toolkit_x86.epf` is the 32-bit Windows build, same story.
+- Avoid: do not expect `1c-toolkit` to work on this Mac. `ECONNREFUSED` on 6003 is permanent here; the item moves to the Windows host. Verify the platform of an EPF add-in with `file .../Ext/Template.bin` before blaming the port or the URL.
+- Dump used to confirm: `python .opencode/skills/epf-dump/scripts/epf-dump.py -V8Path "$HOME/.local/1cv8/8.3.27.1606" -InfoBasePath "$PWD/lab1" -InputFile "$PWD/tools/MCP_Toolkit.epf" -OutputDir /tmp/mcp_toolkit_src`.
+
+### `agent-desktop` gets nothing usable out of 1C on macOS (2026-11-02)
+
+- `npx -y agent-desktop status` reports `accessibility: granted`, `screen_recording: granted`. `list-apps` sees the 1C process (`1cv8c`, then `1cv8t`).
+- Thin client launched from the symlink (`~/.local/1cv8/8.3.27.1606/1cv8c`): `snapshot --app 1cv8c -i --compact` returns `ref_count: 3` — only `Close`, `Minimize`, `Full Screen` in English. Every control inside the window, including the open EPF form, is invisible.
+- Thick client launched from the bundle (`open -a "/Applications/1cv8t.localized/8.3.27.1606/1cv8t.app" --args ENTERPRISE /F...`): the window opens and works, but `snapshot --app 1cv8t` fails with `TIMEOUT` / `global_window_inventory_unstable` / `APP_UNRESPONSIVE`, and the 1C window is absent from `list-windows`.
+- Root cause: 1C draws through wxWidgets and does not publish an accessibility tree on macOS; the same reason `macos.Snapshot` never lists a 1C entry.
+- Avoid: this is the fail branch of the probe — desktop input on macOS stays with the `macos` MCP (coordinates + screenshots). Do not retry `agent-desktop` for 1C on macOS and do not install `agent-desktop-macos`.
+
 ### 1C tree nodes are readable in UIA but not actionable (2026-11-02)
 
 - `snapshot` on the lab1 configurator returned 73 refs with readable Russian names, but on the configuration tree `click` failed with `POLICY_DENIED` (`target is not actionable`) and `expand` / `focus` failed with `ACTION_FAILED`, `COM HRESULT 0x80004001` (`E_NOTIMPL`).
@@ -122,6 +143,7 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 - Binaries under `/Applications/1cv8t.localized/8.3.27.1606/*.app/Contents/MacOS/` are ~52 KB and exit with code 255. Bundles are 948 KB total.
 - Root cause: the training build keeps real binaries in `/opt/1cv8t/8.3.27.1606/`; the `.app` wrappers only locate them and fail outside their expected layout.
 - Avoid: always launch `/opt/1cv8t/8.3.27.1606/1cv8t` or the `~/.local/1cv8/...` symlinks.
+- Correction (2026-11-02): the bundle does work when LaunchServices starts it — `open -a "/Applications/1cv8t.localized/8.3.27.1606/1cv8t.app" --args ENTERPRISE /F<base>` brought up the thick client (window `Конфигурация`, both dialogs interactive). Only the direct invocation of `Contents/MacOS/<bin>` from a shell is the broken path, and it did not even return exit 255 in that test — it hung with no window. Use `open -a` when a bundle launch is explicitly needed; otherwise keep the `/opt/1cv8t` binary.
 
 ### `1c-toolkit` fails with ECONNREFUSED until the EPF is running (2026-10-24)
 

@@ -17,6 +17,20 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 
 <!-- New entries go here, newest first. -->
 
+### Desktop automation on macOS stays with the `macos` MCP (2026-11-02)
+
+- Decision: skip `agent-desktop` on the macOS host; 1C desktop input continues through `macos` MCP (Snapshot/Click/Type/Shortcut) plus screenshots.
+- Reason: the probe failed on both launch paths — 3 refs for the thin client (window buttons only), a `TIMEOUT` for the bundle-launched thick client. 1C publishes no AX tree on macOS, so agent-desktop has nothing to read.
+- Alternatives considered: installing it anyway (adds a permission grant and a second GUI path that sees nothing), retrying with different `--app` values (the app was found; the tree is empty, so the target is not the problem).
+- Consequences: `agent-desktop` stays a Windows-host tool; `.agents/skills/agent-desktop` documents Windows behaviour only in practice. Numbers and commands are in `.agents/gotchas.md` and `.agents/commands.md`.
+
+### `MCP_Toolkit` / `1c-toolkit` is a Windows-host task (2026-11-02)
+
+- Decision: `tools/MCP_Toolkit.epf` is only useful on Windows; do not expect port 6003 on the Mac.
+- Reason: the built-in server is a native add-in shipped as `PE32+ DLL x86-64` inside the EPF, so 1C on macOS cannot load it, and the helper component chain (`MCPHttp`, `ToonConverter`, `SyntaxHelpReader`, `ScreenCapture`) is Windows-only too.
+- Alternatives considered: proxy mode (needs an external MCP server to point at, nothing to run here), rebuilding the add-in for macOS (no sources for the native part).
+- Consequences: `1c-toolkit` in `.opencode/opencode.json` keeps failing with `ECONNREFUSED` on this machine and that is expected; the todo item waits for the Windows machine.
+
 ### agent-desktop on macOS is deferred until the AX tree is proven (2026-11-02)
 
 - Decision: do not install `agent-desktop` on the macOS host yet; probe the live 1C accessibility tree first and install only if it is usable.

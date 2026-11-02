@@ -18,18 +18,9 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 
 ## Open
 
-- [ ] Start `MCP_Toolkit.epf` inside 1C and confirm `1c-toolkit` connects on port 6003.
-- [ ] Probe `agent-desktop` on the macOS host and decide whether to install it there. Run on the Mac (do not install before the probe passes):
-
-  ```bash
-  cd ~/Documents/Work/Languages/1c
-  npx -y agent-desktop status          # Accessibility must be granted to the binary
-  npx -y agent-desktop list-apps       # is 1C listed at all
-  npx -y agent-desktop snapshot --app "1С:Предприятие" -i --compact
-  ```
-
-  Pass (install, add `agent-desktop-macos` skill): `ref_count` in the dozens with readable Russian names, like Windows returned 73 refs on the lab1 configurator. Fail (skip, keep `macos` MCP): `APP_NOT_FOUND`, a window with 0-3 children, or empty names — 1C renders through wxWidgets and may expose nothing. Launch 1C from the `.app` bundle, not from `/opt/1cv8t/.../1cv8t`: the "1C login dialog is invisible to the Accessibility tree" gotcha was recorded for bare-binary launches only, so a bundle launch may behave differently. Record the actual numbers in `.agents/gotchas.md` either way.
-- [ ] Add the Windows-MCP server when the Windows machine is set up (deliberately not in this repo yet).
+- [ ] Start `MCP_Toolkit.epf` inside 1C and confirm `1c-toolkit` connects on port 6003. **Blocked on macOS (2026-11-02):** the EPF's transport add-in is a Windows `PE32+` DLL, so the built-in server cannot load here. Do this on the Windows machine with `tools/MCP_Toolkit.epf`.
+- [x] Probe `agent-desktop` on the macOS host and decide whether to install it there. **Done 2026-11-02 — fail, skipped.** Thin client from a bare binary: `ref_count` 3 (Close/Minimize/Full Screen, English names). Thick client from the bundle: `snapshot` → `TIMEOUT` / `global_window_inventory_unstable`, window absent from `list-windows`. 1C exposes no AX tree on macOS, so the `macos` MCP stays the input path. Numbers in `.agents/gotchas.md`, commands in `.agents/commands.md`.
+- [ ] Add the Windows-MCP server when the Windows machine is set up (deliberately not in this repo yet). Same trip can close the `MCP_Toolkit` item.
 - [x] Confirm the `agent-desktop` UIA tree for a live 1C client on Windows. Done 2026-11-02 on the lab1 configurator: 73-99 refs, readable Russian names, menus and the configuration tree are exposed, but tree nodes only advertise `SetFocus` and their `Expand`/`Click` return `E_NOTIMPL`. Semantic clicks work on window chrome; the tree has to be driven with `press` and `--headed` mouse. Details in `.agents/gotchas.md`.
 - [ ] Dump `lab1` configuration to `lab1/src` if it is going to be edited (no `src/` yet).
 - [ ] Confirm the `macos` MCP `Type` tool can enter text into the 1C login dialog (only `Shortcut`/`Click` were exercised).
