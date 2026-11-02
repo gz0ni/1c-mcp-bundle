@@ -23,7 +23,7 @@ The point of the toolchain is to let an agent read and modify 1C configurations 
 
 ## Package / Repository
 
-- `name:` workspace folder `1c`, not a package.
+- `name:` workspace folder `1c`; the repo root now also carries a private `package.json` (`1c-mcp-bundle`) for project-local npm tooling (`agent-desktop`).
 - `version:` n/a.
 - `org:` personal coursework.
 - Git repository: `git@github.com:gz0ni/1c-mcp-bundle.git`, branch `main`. The repository holds the toolchain only; `lab1`–`lab8` and `test` are gitignored.
@@ -37,6 +37,7 @@ The point of the toolchain is to let an agent read and modify 1C configurations 
 | 1c-testpilot | MCP server driving a live `/TESTCLIENT` |
 | macos-mcp | Accessibility tree, clicks, typing, screenshots on macOS |
 | 1c-mcp-toolkit | Remote MCP at `http://127.0.0.1:6003/mcp`, served by `MCP_Toolkit.epf` inside 1C |
+| agent-desktop 1.0.2 (npm, project-local) | Desktop GUI control on Windows: UIA snapshot with refs, headless clicks, windows, clipboard. Used because no `macos` MCP exists on the Windows host |
 
 ## Design Basis
 

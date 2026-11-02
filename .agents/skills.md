@@ -3,7 +3,7 @@
 Two kinds of skills are in play:
 
 - **Installed project skills** — 81 skills under `.opencode/skills/`, from `cc-1c-skills` (branch `port-opencode-py`). They are copied artifacts; do not edit them in place.
-- **Repo-scoped skills** — `.agents/skills/*/SKILL.md`, for workflows specific to this workspace. Currently none.
+- **Repo-scoped skills** — `.agents/skills/*/SKILL.md`, for workflows specific to this workspace (`agent-desktop` pair, installed from upstream).
 
 ## Installed Skills (`.opencode/skills`)
 
@@ -42,7 +42,16 @@ python .opencode/skills/<skill>/scripts/<skill>.py --help
 
 ## Repo Skills
 
-None yet. Add repeatable workspace-specific workflows here as `.agents/skills/<skill-name>/SKILL.md` and list them in this file.
+Installed from upstream with `npx skills add`, copied into this folder, do not edit in place.
+Reinstall after an `agent-desktop` upgrade to keep them version-matched.
+
+| Skill | Use when | Source |
+|---|---|---|
+| `agent-desktop` | Any desktop GUI task: snapshot, click, type, windows, clipboard, notifications | `vercel-labs/agent-desktop` |
+| `agent-desktop-windows` | Windows specifics: UIA, PowerShell ref quoting, `--headed`-only input, elevation | `vercel-labs/agent-desktop` |
+
+- The binary also embeds the same docs: `agent-desktop skills get desktop`, `agent-desktop skills get platform`.
+- `agent-desktop-macos` / `agent-desktop-linux` / `agent-desktop-ffi` / `jev-desktop` are not installed; add them only if the target host changes.
 
 ## Authoring Notes
 

@@ -114,6 +114,43 @@ macos.Shortcut(shortcut="return")
 
 Coordinates are logical points (screen is 1470×956 logical on this Mac).
 
+## Desktop automation (Windows, agent-desktop)
+
+Project-local install: `npm install` writes `node_modules/`, `npm run setup` links the native
+binary. Only the Windows x64 binary is used here; the package ships every platform.
+
+```powershell
+cd C:\Users\user\.local\share\opencode\worktree\3f005b\clever-squid
+
+.\node_modules\.bin\agent-desktop.cmd status        # platform, permissions, supported_surfaces
+.\node_modules\.bin\agent-desktop.cmd list-apps     # running apps, exact process names
+.\node_modules\.bin\agent-desktop.cmd list-windows  # windows with ids, bounds, titles
+
+# Observe, then act on a ref from that same snapshot
+.\node_modules\.bin\agent-desktop.cmd snapshot --app CalculatorApp.exe -i --compact
+.\node_modules\.bin\agent-desktop.cmd find --app CalculatorApp.exe --name "Отображать как 7" --exact
+.\node_modules\.bin\agent-desktop.cmd click '@sa94te7klsw45:e53'
+.\node_modules\.bin\agent-desktop.cmd snapshot --app CalculatorApp.exe -i --compact   # verify
+```
+
+- `status` on Windows reports `accessibility: granted`, `screen_recording: not_required`. No
+  TCC-style dialog exists.
+- Quote every ref in PowerShell (`'@sa94te7klsw45:e53'`); a bare `@token` is the splatting
+  operator and the argument is dropped, producing `INVALID_ARGS`.
+- Refs expire with the snapshot. After any UI change, re-snapshot or use `find`.
+- `--app` takes the process name from `list-apps` (`Notepad.exe`, `CalculatorApp.exe`), not a
+  window title.
+- `launch` accepts an absolute path or a bare name that exists under `System32` / the Windows
+  directory (`notepad`, `calc`). `mspaint` is not resolvable that way.
+- `click`, `set-value`, `select`, `toggle`, `check`, `scroll` are semantic and headless.
+  `type`, `right-click`, `double-click`, `focus` need `--headed` (they synthesize input).
+- Verified 2026-11-02 on Windows 11: `snapshot` on Calculator returned 56 refs with Russian
+  names; `click` on `Семь` changed the display to `7`.
+
+The two skills are installed into `.agents/skills/agent-desktop` and
+`.agents/skills/agent-desktop-windows`; every command also serves its own docs:
+`agent-desktop skills get desktop` and `agent-desktop skills get platform`.
+
 ## Verification
 
 Run before claiming work is done:

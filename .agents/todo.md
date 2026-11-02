@@ -20,6 +20,7 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 
 - [ ] Start `MCP_Toolkit.epf` inside 1C and confirm `1c-toolkit` connects on port 6003.
 - [ ] Add the Windows-MCP server when the Windows machine is set up (deliberately not in this repo yet).
+- [ ] Confirm the `agent-desktop` UIA tree for a live 1C client on Windows: run `snapshot --app 1cv8.exe -i --compact` on a lab base and record `ref_count` plus whether the command bar and form fields expose readable names. A flat tree means coordinate clicking remains the only path.
 - [ ] Dump `lab1` configuration to `lab1/src` if it is going to be edited (no `src/` yet).
 - [ ] Confirm the `macos` MCP `Type` tool can enter text into the 1C login dialog (only `Shortcut`/`Click` were exercised).
 - [ ] Fill `lab4`–`lab8` when the coursework reaches them; add their PDFs to `labN/src/`.
@@ -49,3 +50,4 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 - [x] Initialize the git repository and push to `git@github.com:gz0ni/1c-mcp-bundle.git` (`main`).
 - [x] Add the methodichka rule (code only from the teacher's PDFs, listings are images).
 - [x] Create `lab4`–`lab8` and keep all lab folders out of git.
+- [x] Install `agent-desktop` 1.0.2 project-local for the Windows host (`npm run setup` links the native binary) and its two skills into `.agents/skills/`. Verified: `status` reports accessibility granted, snapshot on Calculator returned 56 refs, `click` on `Семь` moved the display to `7`.

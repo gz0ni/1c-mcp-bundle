@@ -10,10 +10,12 @@ The repository is a **toolchain bundle**, not a coursework archive. Infobases (`
 |---|---|
 | `AGENTS.md` | Root entry point for coding agents |
 | `.agents/` | Project knowledge base: gotchas, decisions, bugs, commands, architecture |
+| `.agents/skills/` | Upstream skills copied in: `agent-desktop`, `agent-desktop-windows` |
 | `.opencode/skills/` | 81 skills from `cc-1c-skills` (Python ports, branch `port-opencode-py`) |
 | `.opencode/opencode.example.json` | MCP servers: `1c-testpilot`, `1c-toolkit` |
 | `.opencode/1c-testpilot.profiles.example.yaml` | Launch profiles for the test client |
 | `.v8-project.example.json` | Database registry consumed by the `db-*` skills |
+| `package.json` | Project-local npm tooling (`agent-desktop`) |
 
 ## Rule: code comes from the methodichkas
 
@@ -34,6 +36,7 @@ Forbidden: adding functionality, objects, attributes, or algorithms that the met
 - `python` must resolve to Python 3 — the skill scripts call it by that name.
 - `pipx` (Testpilot) and `uv`/`uvx` (macos-mcp).
 - Poppler (`pdftoppm`, `pdfinfo`, `pdfimages`) for reading methodichkas.
+- Node.js 20+ and npm, for the Windows desktop-automation CLI.
 
 ## Setup
 
@@ -57,6 +60,11 @@ cp .opencode/1c-testpilot.profiles.example.yaml .opencode/1c-testpilot.profiles.
 
 # 5. Check
 opencode mcp list
+
+# 6. Desktop automation CLI (Windows host; on macOS the `macos` MCP covers it)
+npm install
+npm run setup   # links the native binary; npm blocks the package's own postinstall
+.\node_modules\.bin\agent-desktop.cmd status
 ```
 
 `1c-toolkit` will report `ECONNREFUSED` until `MCP_Toolkit.epf` is opened in 1C and its built-in server starts on port 6003. That is expected.
@@ -67,7 +75,7 @@ opencode mcp list
 - `.opencode/opencode.json` — machine-specific paths and the `macos` MCP server.
 - `.opencode/1c-testpilot.profiles.yaml` — base credentials.
 
-The `macos` MCP server and the future Windows-MCP server are intentionally **not** part of this repository; they live only in the local `opencode.json`.
+The `macos` MCP server is intentionally **not** part of this repository; it lives only in the local `opencode.json`. On a Windows host, desktop input comes from the project-local `agent-desktop` npm package instead (`node_modules/` is gitignored, `package.json` and the lockfiles are versioned).
 
 ## Known traps
 

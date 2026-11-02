@@ -17,6 +17,13 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 
 <!-- New entries go here, newest first. -->
 
+### agent-desktop installed project-local for the Windows host (2026-11-02)
+
+- Decision: `npm install agent-desktop` in the repo root (`node_modules/`, gitignored) plus its two skills from `npx skills add` into `.agents/skills/`.
+- Reason: the Windows host had no desktop input tool at all — no `macos` MCP (darwin-only), and `1c-testpilot` drives the 1C protocol, not the GUI. agent-desktop gives UIA snapshots with refs, headless clicks, window and clipboard control, and needs no permission grant on Windows.
+- Alternatives considered: raw `Add-Type` + Win32 P/Invoke (write it ourselves, no snapshot semantics), Windows-MCP server (extra MCP process, unverified), coordinate clicking off screenshots (kept only as the fallback when the UIA tree is flat).
+- Consequences: repo root is now an npm package (`package.json`, `package-lock.json`, `skills-lock.json` versioned; `node_modules/` ignored). `npm run setup` is required after `npm install` because the postinstall hook is blocked. The macOS toolchain is untouched: `macos` MCP stays the input path there.
+
 ### Methodichka is the baseline; variant-driven edits are allowed (2026-10-24)
 
 - Decision: start from the code printed in the teacher's PDF; permit only changes the variant requires (renames of procedures/functions/variables, literals, small fixes to make it run).

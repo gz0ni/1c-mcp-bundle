@@ -16,6 +16,35 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### `npm install` without a `package.json` writes to `%USERPROFILE%` (2026-11-02)
+
+- `npm install agent-desktop` in the repo root reported success, but `node_modules/` never appeared in the project and `npm ls` printed `user@ C:\Users\user` with the new dependency.
+- Root cause: no `package.json` in the repo root, so npm walked up and installed into the home directory's own `package.json`. `C:\Users\user\package.json` is not part of this project.
+- Avoid: the repo root now has a private `package.json`. Never run `npm install <pkg>` in a directory without one. If it happens again, `npm uninstall <pkg>` from the home directory to clean up.
+
+### npm blocks `agent-desktop` postinstall, so the native binary is never linked (2026-11-02)
+
+- `npm install agent-desktop` printed `npm warn install-scripts 1 package had install scripts blocked`, and `node_modules/agent-desktop/bin/agent-desktop-win32-x64.exe.sha256` existed while `.bin/agent-desktop.cmd` still pointed at the Node wrapper.
+- Root cause: this npm enforces an `allowScripts` policy; third-party `postinstall` hooks are skipped unless approved.
+- Avoid: run `npm run setup` (wraps `node node_modules/agent-desktop/scripts/postinstall.js`). It copies the bundled binary, writes the digest sidecar, and links the `.cmd` shim. Verify with `.\node_modules\.bin\agent-desktop.cmd version`.
+
+### `npx skills add` fails with `schannel: failed to receive handshake` (2026-11-02)
+
+- `npx skills add https://github.com/vercel-labs/agent-desktop` died at `Cloning repository` with an SSL/TLS handshake error, while `npx skills use` on the same URL worked (it downloads over HTTPS without git).
+- Root cause: git on this host defaults to the `schannel` TLS backend, which fails against GitHub from this network.
+- Avoid: run the install with git's OpenSSL backend in the environment, no global config change needed:
+
+  ```powershell
+  $env:GIT_CONFIG_COUNT='1'; $env:GIT_CONFIG_KEY_0='http.sslBackend'; $env:GIT_CONFIG_VALUE_0='openssl'
+  npx -y skills add https://github.com/vercel-labs/agent-desktop --skill agent-desktop agent-desktop-windows --agent opencode -y
+  ```
+
+### `agent-desktop snapshot --app` wants the process name, not the window title (2026-11-02)
+
+- `--app calc` and `--app ApplicationFrameHost.exe` both returned `APP_NOT_FOUND` / `WINDOW_NOT_FOUND` while Calculator was on screen.
+- Root cause: `launch calc` starts the UWP host, but the window belongs to `CalculatorApp.exe`; the tool matches exact process identity from `list-apps` / `list-windows`.
+- Avoid: read the name from `list-windows` (`app_name`) and pass that. UWP apps surface as their own `*App.exe`, not as `ApplicationFrameHost.exe`.
+
 ### Code in the methodichkas is images, not text (2026-10-24)
 
 - `pdftotext` on `lab3/src/Лабораторная работа №3 (2022-2023).pdf` returns 89 KB of prose but zero `Процедура` / `Функция` matches, while `pdfimages -list` shows 16 embedded images.

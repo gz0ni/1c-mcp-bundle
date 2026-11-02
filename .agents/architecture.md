@@ -8,11 +8,13 @@ Map of what lives where. This is a workspace, not an application: there is no bu
 /Users/gz0ni/Documents/Work/Languages/1c/
 ├── AGENTS.md                     # root entry point -> .agents/
 ├── .agents/                      # agent journals and reference docs (this folder)
+│   └── skills/                   # repo-scoped skills (agent-desktop, agent-desktop-windows)
 ├── .opencode/
 │   ├── opencode.json             # project-scoped MCP servers (V2 schema: mcp.servers)
 │   ├── 1c-testpilot.profiles.yaml
 │   └── skills/                   # 81 cc-1c-skills + .cc-1c-skills.json + requirements.txt
 ├── .v8-project.json              # database registry read by every db-* skill
+├── package.json                  # project-local npm tooling (agent-desktop)
 ├── lab1/                         # file infobase, no users, no src/
 ├── lab2/                         # file infobase, user "админ", src/ present
 └── lab3/                         # file infobase, user "admin", src/ present, default
@@ -55,6 +57,14 @@ Each skill has a Python port; `.ps1` files are present but unusable (no PowerShe
 - `1c-toolkit` — remote HTTP `http://127.0.0.1:6003/mcp`, served by `MCP_Toolkit.epf` inside 1C. Not running by default.
 - `macos` — local `uvx macos-mcp serve`, Accessibility tree and input.
 
+### Desktop automation (`agent-desktop`, npm)
+
+Project-local install from npm (`vercel-labs/agent-desktop`), not an MCP server: the agent shells
+out to `node_modules/.bin/agent-desktop.cmd`. Bundled native binary for Windows x64 at
+`node_modules/agent-desktop/bin/agent-desktop-win32-x64.exe`; `scripts/postinstall.js` links it and
+is run through `npm run setup` because npm blocks third-party install hooks. Skills live in
+`.agents/skills/agent-desktop{,-windows}/`. Commands are in `.agents/commands.md`.
+
 ### Registry (`.v8-project.json`)
 
 Root `v8path` points at the `1cv8` symlink. Each database entry carries `path`, `configSrc`, `user`, `password`, `aliases`. `default` is `lab3`.
@@ -74,6 +84,7 @@ Skills read `v8path` from the registry but expect the agent to resolve the base 
 - `lab1` has no `src/` dump — only lab2 and lab3 do.
 - No git, no CI, no tests.
 - `macos` MCP cannot use AppleScript (TCC).
+- `agent-desktop` is installed but never exercised against a live 1C client on this host; whether 1C exposes a usable UIA tree is still unknown.
 
 ## Roadmap
 

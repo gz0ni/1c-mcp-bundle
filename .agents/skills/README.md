@@ -13,7 +13,10 @@ Repo-scoped skills live in this folder as `<skill-name>/SKILL.md`.
 
 ## Current skills
 
-None yet.
+- `agent-desktop` — desktop GUI control through the OS accessibility tree (installed from `vercel-labs/agent-desktop`).
+- `agent-desktop-windows` — Windows platform guide for the same CLI.
+
+Installed with `npx skills add`; do not edit in place, reinstall to update.
 
 Candidate workflows worth capturing here later:
 

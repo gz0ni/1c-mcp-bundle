@@ -5,6 +5,9 @@
 __pycache__/
 *.pyc
 
+# Node (agent-desktop CLI)
+node_modules/
+
 # Local infobases and lab sources (never versioned)
 lab*/
 test/
