@@ -16,6 +16,29 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### 1C tree nodes are readable in UIA but not actionable (2026-11-02)
+
+- `snapshot` on the lab1 configurator returned 73 refs with readable Russian names, but on the configuration tree `click` failed with `POLICY_DENIED` (`target is not actionable`) and `expand` / `focus` failed with `ACTION_FAILED`, `COM HRESULT 0x80004001` (`E_NOTIMPL`).
+- Root cause: 1C advertises `ExpandCollapse` and `SetFocus` in its UIA providers but does not implement them; tree nodes expose no `Invoke` pattern, so there is no semantic delivery path.
+- Avoid: drive the 1C tree with the keyboard (`press --app 1cv8t.exe right --headed` expanded a node, `down` walks siblings) and use `--headed` mouse for anything else. Semantic clicks do work on window chrome (`Закрыть` closed the configurator with `InvokePattern.Invoke`).
+
+### PowerShell decodes child-process UTF-8 as CP866, corrupting Cyrillic JSON (2026-11-02)
+
+- `agent-desktop ... | Out-File -Encoding utf8` produced a file whose Cyrillic names were double-encoded (`╨Ъ╨╛╨╜╤Д╨╕╨│...`), so `JSON.parse` still worked but every name was garbage.
+- Root cause: PowerShell decodes the child's stdout using the console code page (CP866 here), not UTF-8, before re-encoding on write.
+- Avoid: redirect inside `cmd` so bytes pass through untouched, and set the console encoding for readable output:
+
+  ```powershell
+  [Console]::OutputEncoding=[Text.Encoding]::UTF8
+  cmd /c ".\node_modules\.bin\agent-desktop.cmd snapshot --app 1cv8t.exe -i --compact > %TEMP%\snap.json"
+  ```
+
+### A Cyrillic path typed into PowerShell does not resolve (2026-11-02)
+
+- `Start-Process 'D:\Rubbish\Установка на чужие программы\1с\...\1cv8t.exe'` failed with "не удается найти файл", while the file exists.
+- Root cause: the command text is encoded differently from the file system name, so the literal never matches.
+- Avoid: resolve the path through the provider instead of typing it: `$exe = (Get-ChildItem D:\Rubbish -Recurse -Depth 6 -Filter 1cv8t.exe | Select-Object -First 1).FullName`.
+
 ### `npm install` without a `package.json` writes to `%USERPROFILE%` (2026-11-02)
 
 - `npm install agent-desktop` in the repo root reported success, but `node_modules/` never appeared in the project and `npm ls` printed `user@ C:\Users\user` with the new dependency.

@@ -7,6 +7,7 @@ The point of the toolchain is to let an agent read and modify 1C configurations 
 ## Platforms
 
 - Host: macOS (darwin), Apple Silicon (arm64).
+- Windows host (2026-11-02): the repository is also checked out at `D:\Work\1C` with `lab1`–`lab8` and `test`, and a worktree for agent work. 1C there is 8.3.27.1508 (portable, under `D:\Rubbish`) plus an 8.5.1.1150 training build in `C:\Program Files (x86)\1cv8t`. Use 8.3.27 to match the bases; the `.ps1` skill ports still do not run (no `pwsh` in this toolchain's conventions).
 - 1C:Enterprise 8.3.27.1606 **training build**, x86_64 binaries running under Rosetta 2.
 - No Windows and no `pwsh`: the PowerShell ports of the skills are unusable here, only the Python ports work.
 - Client UI is macOS-native (wxWidgets 3.0).

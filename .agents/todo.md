@@ -20,7 +20,7 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 
 - [ ] Start `MCP_Toolkit.epf` inside 1C and confirm `1c-toolkit` connects on port 6003.
 - [ ] Add the Windows-MCP server when the Windows machine is set up (deliberately not in this repo yet).
-- [ ] Confirm the `agent-desktop` UIA tree for a live 1C client on Windows: run `snapshot --app 1cv8.exe -i --compact` on a lab base and record `ref_count` plus whether the command bar and form fields expose readable names. A flat tree means coordinate clicking remains the only path.
+- [x] Confirm the `agent-desktop` UIA tree for a live 1C client on Windows. Done 2026-11-02 on the lab1 configurator: 73-99 refs, readable Russian names, menus and the configuration tree are exposed, but tree nodes only advertise `SetFocus` and their `Expand`/`Click` return `E_NOTIMPL`. Semantic clicks work on window chrome; the tree has to be driven with `press` and `--headed` mouse. Details in `.agents/gotchas.md`.
 - [ ] Dump `lab1` configuration to `lab1/src` if it is going to be edited (no `src/` yet).
 - [ ] Confirm the `macos` MCP `Type` tool can enter text into the 1C login dialog (only `Shortcut`/`Click` were exercised).
 - [ ] Fill `lab4`–`lab8` when the coursework reaches them; add their PDFs to `labN/src/`.
