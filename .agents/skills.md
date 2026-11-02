@@ -52,6 +52,7 @@ Reinstall after an `agent-desktop` upgrade to keep them version-matched.
 
 - The binary also embeds the same docs: `agent-desktop skills get desktop`, `agent-desktop skills get platform`.
 - `agent-desktop-macos` / `agent-desktop-linux` / `agent-desktop-ffi` / `jev-desktop` are not installed; add them only if the target host changes.
+- macOS install is deliberately deferred: probe the 1C AX tree first, see `.agents/todo.md` and `.agents/project-decisions.md`. There, `macos` MCP remains the desktop input path.
 
 ## Authoring Notes
 

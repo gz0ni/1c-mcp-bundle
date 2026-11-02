@@ -103,6 +103,7 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 - `macos.Snapshot` listed no 1C window at all, even when the dialog was on screen and frontmost.
 - Root cause: the app is launched from a bare binary, not a `.app` bundle, so LaunchServices does not register it (`lsappinfo info <pid>` shows `bundle path = [NULL]`, `Arch = !!none`). AX exposes only registered apps.
 - Avoid: do not trust AX to find 1C dialogs. Take a screenshot (`screencapture -x`) and read it.
+- Scope (2026-11-02): this was observed with a bare-binary launch. 1C is normally started from its `.app` bundle, which LaunchServices does register, so the AX tree may exist there. Unverified — the probe is in `.agents/todo.md`; do not treat this entry as proof that 1C is invisible to AX in general.
 
 ### Screen Recording permission is cached until the app restarts (2026-10-24)
 
