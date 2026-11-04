@@ -16,6 +16,13 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### Subsystem section is blank when its only commands are hidden or a common form has no command (2026-11-04)
+
+- lab2: clicking «Индивидуальный предприниматель» showed an empty page.
+- Root cause: `CommonForms/ФормаКонстант.xml` had `<UseStandardCommands>false</UseStandardCommands>`, so the form produced no section command, and the subsystem `CommandInterface.xml` hid both `Constant.*.StandardCommand.Open`. Nothing visible was left.
+- Avoid: set `UseStandardCommands` to `true` on a common form that must appear in a section, and check `CommandsVisibility` before hiding the last commands. Fixed by doing both; the section now shows «Название организации», «Форма констант», «Юридический адрес» under «Сервис».
+- Also: in the section panel, y≈98 is «Главное», not «Заказы» (y≈165) in a 1840×952 window. A click on the wrong row looks like a blank section.
+
 ### Testpilot on Windows needs `1cv8c.exe`, the training build only ships `1cv8ct.exe` (2026-11-04)
 
 - `1c-testpilot` validates the launcher name: `('1cv8.exe', '1cv8c.exe')` on Windows (`_runtime.py`). The portable 8.3.27.1508 training build has only `1cv8t.exe` / `1cv8ct.exe`.
