@@ -17,6 +17,25 @@ cd /Users/gz0ni/Documents/Work/Languages/1c && opencode mcp list
 
 Expected `opencode mcp list`: `1c-testpilot`, `macos`, `context7`, `github`, `gsheets`, `opencode_console` connected; `agentmemory` connected only while its daemon runs (see `.agents/gotchas.md`); `1c-toolkit` failed with `ECONNREFUSED`. On this Mac that failure is permanent: `MCP_Toolkit.epf` serves the server through a Windows-only native add-in (see `.agents/gotchas.md`). `1c-toolkit` becomes usable only on the Windows host.
 
+## MCP servers in Claude Code (Windows host)
+
+Moved from OpenCode on 2026-11-04. Of the global OpenCode servers only `context7` and `1c-mcp`
+went to the Claude Code user scope (`~/.claude.json`); `gsheets`, `github`, `agentmemory` and
+`blockbench` were dropped at the user's request. The project server is in
+`D:\Work\1C\.mcp.json` (gitignored; template
+`.mcp.example.json`). `1c-testpilot` is installed with `uv tool install
+"git+https://github.com/ROCTUP/1c-testpilot"` → `C:\Users\user\.local\bin\1c-testpilot.exe`;
+profiles live in `.opencode/1c-testpilot.profiles.yaml` (lab1–lab8, test).
+
+```bash
+cd /d/Work/1C && claude mcp list
+```
+
+Expected: `context7` connected; `1c-testpilot` connected once the user approved the project
+server; `1c-mcp` (port 6003) `ECONNREFUSED` until `MCP_Toolkit.epf` is running its server.
+Verified 2026-11-04: Testpilot `launch_client(profile="lab1")` connected to 8.3.27.1508 and
+`stop_client` shut it down gracefully.
+
 ## Open the MCP Toolkit and start its server (Windows only)
 
 ```bash

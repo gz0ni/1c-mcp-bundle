@@ -31,6 +31,11 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 
 ## Done
 
+- [x] Move OpenCode MCP servers to Claude Code on Windows (2026-11-04): `context7`, `1c-mcp` in user scope (`gsheets`, `github`, `agentmemory`, `blockbench` dropped by the user); `1c-testpilot` in project `.mcp.json`. Verified with `claude mcp list` and a Testpilot launch/stop on lab1. `macos` MCP not moved — macOS-only.
+
+- [x] lab2 variant 16: build `УчетКопийКартин` in `D:\Work\1C\lab2\src` (3 subsystems, 2 constants, 2 enums, 2 hierarchical catalogs, 3 documents, constants form, 2 roles, users), load with `-UpdateDB`, `cf-validate` + `form-validate` + `role-validate` + `/CheckModules` clean.
+- [x] lab2 demo data via EPF `ЗаполнениеДанных`: constants «ЗАО „Тлиз“» / «г. Севастополь, пр. Науки, 5», groups `ВанГог`/`Рембрант` + 11 paintings, users `Администратор`/`Головач Елена` with roles — verified by file read-back.
+- [x] lab2 logic verified by EPF `ПроверкаЛогики`: document snapshot of constants on posting, `Группа` column, auto-total 350.00 on the form, catalog form “Группа” field and its hiding for groups, constants form open/save.
 - [x] Install 81 `cc-1c-skills` into `.opencode/skills` with manifest and `requirements.txt`.
 - [x] Install `pipx`, `uv`, and Python deps `lxml` / `Pillow` / `psutil`.
 - [x] Create the `python` shim at `~/.local/bin/python`.

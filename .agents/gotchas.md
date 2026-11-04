@@ -16,6 +16,66 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### Testpilot on Windows needs `1cv8c.exe`, the training build only ships `1cv8ct.exe` (2026-11-04)
+
+- `1c-testpilot` validates the launcher name: `('1cv8.exe', '1cv8c.exe')` on Windows (`_runtime.py`). The portable 8.3.27.1508 training build has only `1cv8t.exe` / `1cv8ct.exe`.
+- Root cause: same hard-coded check as on macOS; the `t` suffix of the training build is rejected.
+- Avoid: hard links next to the originals (a symlink elsewhere would break DLL lookup): `bin\1cv8c.exe` → `1cv8ct.exe`, `bin\1cv8.exe` → `1cv8t.exe`. Created 2026-11-04 in `D:\Rubbish\никому не нужные проги\1с\8.3.27.1508\bin`.
+
+### Project `.mcp.json` servers stay "Pending approval" in Claude Code (2026-11-04)
+
+- `claude mcp list` showed `1c-testpilot ... ⏸ Pending approval`; the agent is not allowed to write `.claude/settings.local.json` itself (auto-mode classifier: self-modification).
+- Root cause: Claude Code requires the user to trust servers from a project `.mcp.json`.
+- Avoid: the user approves once, in an interactive `claude` started in `D:\Work\1C` or via the app's MCP prompt. Do not try to bypass it.
+
+### Document attributes changed in `ОбработкаПроведения` are not saved (2026-11-03)
+
+- Snapshot code (`ЭтотОбъект.НазваниеОрганизации = Константы...Получить()`) placed in `ОбработкаПроведения` left the attributes empty after `Записать(РежимЗаписиДокумента.Проведение)`.
+- Root cause: by the time `ОбработкаПроведения` runs, the document data is already written; changing the object there is discarded.
+- Avoid: fill snapshot attributes in `ПередЗаписью` guarded by `Если РежимЗаписи = РежимЗаписиДокумента.Проведение Тогда`.
+
+### `Константы.СоздатьНаборКонстант()` does not exist on this platform (2026-11-03)
+
+- The common form for constants failed to open with `Метод объекта не обнаружен (СоздатьНаборКонстант)`.
+- Root cause: the method is absent in 8.5.1 учебная (and in 8.3.x compatibility mode), and the `ConstantsSet` main form attribute is initialized by the platform anyway.
+- Avoid: leave `ПриСозданииНаСервере` of a constants form empty; write constants with `Константы.<Имя>.Установить(...)`.
+
+### New catalogs truncate names at 25 chars, silently creating duplicates (2026-11-03)
+
+- An idempotent data loader kept creating copies of paintings whose names exceeded 25 chars: `НайтиПоНаименованию("Вечернее умиротворение с перфоратором у соседа")` returned an empty ref every run.
+- Root cause: the default `<DescriptionLength>25</DescriptionLength>` in the catalog XML truncated the stored name, so the exact-match lookup never found the record.
+- Avoid: raise `DescriptionLength` (e.g. 100) when demo data has long names, and verify catalog contents by dumping them to a file instead of trusting the count.
+
+### 1C security dialogs have no child windows; click by coordinates (2026-11-03)
+
+- `EnumChildWindows` on the 643x278 «Предупреждение безопасности» window returns nothing, and `SetCursorPos` + `mouse_event` from a background process often has no effect.
+- Root cause: 1C draws its dialogs itself (`V8Window0.*` class), and the foreground lock blocks injected mouse input.
+- Avoid: `SendMessage(hwnd, WM_LBUTTONDOWN/UP, 1/0, MAKELPARAM(x, y))` with client coordinates; «Да» sits at `(width - 132, height - 33)`. Expect 1–3 dialogs per freshly rebuilt EPF, and a repeat launch with no dialogs afterwards.
+
+### PowerShell 5.1 reads BOM-less .ps1 as ANSI, mangling Cyrillic literals (2026-11-03)
+
+- A script containing `'/N','Администратор'` failed to parse with `Нельзя найти элемент...` / broken tokens.
+- Root cause: `-File` scripts without a UTF-8 BOM are decoded with the ANSI code page.
+- Avoid: write `.ps1` files with UTF-8 BOM (`encoding='utf-8-sig'`), or build Cyrillic strings from `[char]` codes.
+
+### `ОткрытьФорму` needs the full `Тип.Объект.Форма.ИмяФормы` path (2026-11-03)
+
+- `ОткрытьФорму("Документ.Производство.ФормаДокумента")` raised `Неизвестное имя формы`.
+- Root cause: the form-name path includes the `Форма` segment.
+- Avoid: use `"Документ.Производство.Форма.ФормаДокумента"` (and `"Справочник.X.Форма.ФормаЭлемента"` for catalog forms).
+
+### Server-side form opening is unavailable under `/Execute` (2026-11-03)
+
+- `Документы.Производство.ПолучитьФорму(...).Открыть()` inside `ПриСозданииНаСервере` failed with `Интерактивные операции недоступны`.
+- Root cause: the platform forbids interactive operations from a server call in that launch mode.
+- Avoid: open forms on the client (`ПриОткрытии`) via `ОткрытьФорму(...)`, passing the ref through a form attribute filled on the server.
+
+### A file infobase with users rejects DESIGNER without `/N` (2026-11-03)
+
+- After users were created, `epf-build`/`DESIGNER` failed with `Пользователь ИБ не идентифицирован`.
+- Root cause: authentication becomes mandatory once the user list is non-empty.
+- Avoid: pass `-UserName Администратор` (empty password omitted) to every skill script that touches `lab2`.
+
 ### `agentmemory` MCP times out when its daemon is not running (2026-11-02)
 
 - `opencode mcp list` showed `agentmemory failed: Request timed out`, while the `npx @agentmemory/mcp` process was alive (two PIDs under `~/.npm/_npx`).

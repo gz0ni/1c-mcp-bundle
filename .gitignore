@@ -16,3 +16,5 @@ test/
 .v8-project.json
 .opencode/opencode.json
 .opencode/1c-testpilot.profiles.yaml
+.mcp.json
+.claude/settings.local.json

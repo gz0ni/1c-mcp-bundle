@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "1c-testpilot": {
+      "type": "stdio",
+      "command": "C:\\Users\\<you>\\.local\\bin\\1c-testpilot.exe",
+      "args": [],
+      "env": {
+        "TC1C_TRANSPORT": "stdio",
+        "TC_PLATFORM_VERSION": "8.3.27.1508",
+        "TC1C_PLATFORM_EXE": "C:\\path\\to\\1cv8\\8.3.27.1508\\bin\\1cv8c.exe",
+        "TC1C_PROFILES_FILE": "C:\\absolute\\path\\to\\repo\\.opencode\\1c-testpilot.profiles.yaml"
+      }
+    }
+  }
+}
