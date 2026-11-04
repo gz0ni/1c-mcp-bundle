@@ -31,6 +31,10 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 
 ## Done
 
+- [x] lab3 filled with lab2 data (2026-11-04): throwaway EPF `ПереносДанных` (scratchpad, not in repo) serialises constants, catalogs and documents of lab2 with `ЗаписатьXML` and reloads them into lab3 with the same refs, then reposts the 6 documents. Verified by re-export (byte-identical to the lab2 export) and by the `Цены` register: 21 records, no orphans. lab2 infobase users were not copied (lab3 keeps `admin`). Gotchas: `Структура`/`ФиксированнаяСтруктура` do not serialise to XML, subordinate registers cannot be cleared without a recorder filter, the EPF security dialog needs a click per fresh build.
+
+- [x] lab3 variant 16 (2026-11-04): copied `lab2/src` to `lab3/src`, added registers `Цены` (Second, recorder-subordinate; `Копия`, `ТипКопий`, resource `Стоимость`) and `УчетнаяПолитика` (Year, independent, resource `СтратегияУчета`), `ОбработкаПроведения` in `УстановкаЦен`/`Производство`/`Оплата` (the last two with `Перечисления.ТипыКопий.ВанГог`), `ТипКопийПриИзменении`, `ПолучитьСтоимость` and the `Копия` handlers per methodichka figs 2.4–2.9. Role UUIDs aligned with the old `lab3` base so its user kept administrator rights; full load with `-UpdateDB`, `/CheckModules` clean, Testpilot: `УстановкаЦен` posted 100,00, `Производство` row picked up `Стоимость` 100,00 and `Сумма` 100,00. The old freehand `lab3` content was replaced (no backup, user's call). Not done: `.dt` for the report, demo data, `ТипКопийПриИзменении` not exercised in the client.
+
 - [x] Move OpenCode MCP servers to Claude Code on Windows (2026-11-04): `context7`, `1c-mcp` in user scope (`gsheets`, `github`, `agentmemory`, `blockbench` dropped by the user); `1c-testpilot` in project `.mcp.json`. Verified with `claude mcp list` and a Testpilot launch/stop on lab1. `macos` MCP not moved — macOS-only.
 
 - [x] lab2 variant 16: build `УчетКопийКартин` in `D:\Work\1C\lab2\src` (3 subsystems, 2 constants, 2 enums, 2 hierarchical catalogs, 3 documents, constants form, 2 roles, users), load with `-UpdateDB`, `cf-validate` + `form-validate` + `role-validate` + `/CheckModules` clean.

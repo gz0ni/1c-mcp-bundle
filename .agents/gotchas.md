@@ -16,6 +16,21 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### Full `db-load-xml` into a base with users fails: `не осталось ни одного пользователя с административными правами` (2026-11-04)
+
+- Loading `lab3/src` (a lab2 copy) into the `lab3` base failed after listing `Объект изменен: Пользователи информационной базы`.
+- Root cause: base users keep roles by role UUID; the lab2 roles had other UUIDs, so `admin` would lose `Администратор`.
+- Avoid: copy the role UUIDs of the target base into `Roles/*.xml` and `ConfigDumpInfo.xml` (dump the base first, read `<Role uuid=...>`), then reload.
+- Also: `Remove-Item` on a Temp path was blocked by a guard on `D:\Rubbish`; write check output to a unique scratch file instead.
+- Also: a new document's `Дата` defaults to today 00:00:00, so a `Цены` register with `Second` periodicity returns nothing for it when the price was posted later the same day; set the date after the price document in manual tests.
+
+### `lab3` base already holds an old freehand config, not the lab2 copy (2026-11-04)
+
+- A dump of the `lab3` base (`UchetKopiyKartin` with registers `Цены`/`УчетнаяПолитика`, enum `СтратегииУчета`, EPF-like `ЗаполнениеДемо`) differs from `lab2/src` in nearly every module. Its document modules carry a `ТипКопий` attribute and query-based code that the methodichka does not print.
+- Root cause: an earlier attempt built lab3 without following the printed code; `lab3/src` did not exist.
+- Avoid: lab3 starts from a copy of `lab2/src` (done in `lab3/src`), not from the base content. Back up the `lab3` base folder before the first `-UpdateDB` load that replaces it.
+- Also: there is no `.v8-project.json` on Windows, so `db-dump-xml.py` fails with `1C executable not found`; pass `-V8Path <dir of 1cv8t.exe>` (`D:\Rubbish\...\8.3.27.1508\bin`, resolve it with `Get-ChildItem`, see the Cyrillic path gotcha).
+
 ### Reference fields read on the client fail: `Поле объекта не обнаружено (Родитель)` (2026-11-04)
 
 - lab2 `Производство` form: picking a `Копия` raised the error at `ТекСтрока.Группа = ТекСтрока.Копия.Родитель;` in the `&НаКлиенте` handler. `Оплата` and `УстановкаЦен` had the same line. The demo-data EPF filled `Группа` on the server, so the bug only showed up in manual input.
