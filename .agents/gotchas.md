@@ -16,6 +16,19 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### Reference fields read on the client fail: `Поле объекта не обнаружено (Родитель)` (2026-11-04)
+
+- lab2 `Производство` form: picking a `Копия` raised the error at `ТекСтрока.Группа = ТекСтрока.Копия.Родитель;` in the `&НаКлиенте` handler. `Оплата` and `УстановкаЦен` had the same line. The demo-data EPF filled `Группа` on the server, so the bug only showed up in manual input.
+- Root cause: a managed-form client holds only the reference value, not the object's attributes.
+- Avoid: read reference attributes through a `&НаСервереБезКонтекста` function (`ПолучитьГруппуКопии(Копия)` returns `Копия.Родитель`). Test `ПриИзменении` handlers by hand in the client, not only via server-side scripts.
+
+### `db-load-xml` fails while the user's Configurator is open (2026-11-04)
+
+- `Ошибка блокировки информационной базы для конфигурирования. Возможно, информационная база уже открыта Конфигуратором.`, exit code 1.
+- Root cause: batch `/LoadConfigFromFiles` needs the configuration lock that an interactive Configurator holds.
+- Avoid: check `Get-Process 1cv8*` first and ask the user to close the Configurator; do not kill it (unsaved edits).
+- Also on this host: bare `python` is 3.10 without `lxml`; run skill scripts with `py -3.13`.
+
 ### Subsystem section is blank when its only commands are hidden or a common form has no command (2026-11-04)
 
 - lab2: clicking «Индивидуальный предприниматель» showed an empty page.
