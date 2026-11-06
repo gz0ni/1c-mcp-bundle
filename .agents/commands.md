@@ -27,14 +27,27 @@ went to the Claude Code user scope (`~/.claude.json`); `gsheets`, `github`, `age
 "git+https://github.com/ROCTUP/1c-testpilot"` → `C:\Users\user\.local\bin\1c-testpilot.exe`;
 profiles live in `.opencode/1c-testpilot.profiles.yaml` (lab1–lab8, test).
 
+Each client keeps its own config since 2026-11-05 (all in `D:\Work\1C`, all gitignored):
+
+| Client | Config | Schema |
+|---|---|---|
+| Claude Code | `.mcp.json` + `.claude/settings.json` (`enabledMcpjsonServers`) | `mcpServers`, stdio `command`/`env` |
+| OpenCode | `.opencode/opencode.json` | `mcp.servers`, `type: "local"`, `command` array, `environment` |
+| Codex | `.codex/config.toml` | `[mcp_servers.<name>]`, `command`/`args`/`env` |
+
+Claude Code has no `.cloudcode` notion — it only reads `.mcp.json`, `~/.claude.json`, or a
+`--mcp-config` path.
+
 ```bash
 cd /d/Work/1C && claude mcp list
+cd /d/Work/1C && opencode mcp list
 ```
 
-Expected: `context7` connected; `1c-testpilot` connected once the user approved the project
-server; `1c-mcp` (port 6003) `ECONNREFUSED` until `MCP_Toolkit.epf` is running its server.
-Verified 2026-11-04: Testpilot `launch_client(profile="lab1")` connected to 8.3.27.1508 and
-`stop_client` shut it down gracefully.
+Expected: `1c-testpilot` connected in both; `1c-mcp` (port 6003) `ECONNREFUSED` until
+`MCP_Toolkit.epf` is running its server. Verified 2026-11-05: both clients report
+`1c-testpilot connected`, the stdio handshake returns 11 `tc_*` tools (`tc_session`, `tc_app`,
+`tc_window`, `tc_field`, `tc_doc`, `tc_table`, `tc_calendar`, `tc_keyboard`, `tc_form`,
+`tc_scenario`, `tc_find`). Codex CLI is not installed on this host, so its config is unverified.
 
 ## Open the MCP Toolkit and start its server (Windows only)
 

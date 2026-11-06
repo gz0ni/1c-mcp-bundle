@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": [
+    "1c-testpilot",
+    "1c-mcp"
+  ]
+}
