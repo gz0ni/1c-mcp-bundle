@@ -17,6 +17,13 @@ Known bugs found in this project and how they were fixed, so they do not reappea
 
 <!-- New entries go here, newest first. -->
 
+### Lab4 query processor was absent from section menus (2026-11-11) — fixed
+
+- Symptom: the user could only open the query processor through a navigation link, not by clicking a visible section command.
+- Root cause: the processor was not included in any subsystem.
+- Fix: at the user's request added the existing processor to `Заказы`; its standard Open command appears under Service.
+- Verification: clicked Orders > Service > Query > Execute in Testpilot; output and screenshot checked. Only subsystem membership changed; no application code or data changed.
+
 ### Lab4 generated spreadsheet had narrow columns and full-row borders (2026-11-11) — fixed
 
 - Symptom: correct query values were clipped and cell borders continued across unused columns.

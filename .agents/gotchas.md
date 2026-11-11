@@ -16,6 +16,16 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### Testpilot command catalogue cannot inspect every section menu (2026-11-11)
+
+- First catalogue search requires an unfiltered scan or `refresh=true`. On lab4 the scan then returned `menu_state_unavailable` for the Main section and no commands.
+- Do not interpret an incomplete scan as a missing command. Inspect the window and navigate the desired section directly before verifying its visible commands.
+
+### Testpilot no-active-window errors can indicate an exited client (2026-11-11)
+
+- A launched lab4 client connected, then navigation and screenshot calls reported no active window. The launched PID no longer existed.
+- Check process liveness before retrying UI commands. Clear the owned connection and do not assume a configuration failure from this session-state error.
+
 ### Nested Python quoting in PowerShell breaks inline verification (2026-11-11)
 
 - A long `python -c` containing escaped XPath quotes failed with `SyntaxError: unterminated string literal`.

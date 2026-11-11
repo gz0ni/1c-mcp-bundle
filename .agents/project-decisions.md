@@ -17,6 +17,12 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 
 <!-- New entries go here, newest first. -->
 
+### Expose the existing lab4 processor in Orders (2026-11-11)
+
+- Decision: add `DataProcessor.Запрос` to the existing `Заказы` subsystem.
+- Reason: the user explicitly requires opening and running the processor through visible buttons instead of entering navigation links.
+- Consequences: the verified path is Orders > Service > Query > Execute. This supersedes the initial decision to leave section membership unchanged; no new objects or query logic were introduced.
+
 ### Lab4 continues the supplied lab3 base (2026-11-11)
 
 - Decision: preserve all existing lab4 objects and data; add only the query processor from PDF pp. 19–24 and variant 16 on p. 31.
