@@ -16,6 +16,46 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### Nested Python quoting in PowerShell breaks inline verification (2026-11-11)
+
+- A long `python -c` containing escaped XPath quotes failed with `SyntaxError: unterminated string literal`.
+- Store nontrivial verification code in a workspace `.py` file and run it directly; avoid nesting shell and Python string escaping.
+
+### Global agent-desktop refuses its private-file permissions (2026-11-11)
+
+- `agent-desktop status` returned `PERM_DENIED: private file DACL grants an untrusted principal`; no local binary exists under this checkout's `node_modules`.
+- Do not change permission checks or DACLs during coursework. Use Testpilot's native screenshot API for 1C verification.
+
+### MXL DSL column widths are absolute, rowStyle extends across the sheet (2026-11-11)
+
+- The lab4 query passed XML/module checks but rendered narrow columns and borders across the whole spreadsheet.
+- `columnWidths` uses absolute platform units, not character counts; `rowStyle` sets formatting for the entire row, including unused columns.
+- Use widths measured from the PDF screenshot and apply borders to the two explicit cells instead of the row. Always inspect the rendered form.
+
+### Spreadsheet export can leave a format confirmation dialog (2026-11-11)
+
+- A second Testpilot spreadsheet export returned `target_not_interactive` after the HTML export request.
+- An accepted export request is asynchronous and can open another dialog. Inspect the active window and confirm the first export before sending another one.
+- The actual lab4 dialog says the training license disables printing/saving spreadsheet documents. Do not attempt additional exports; use protocol cell reads and screenshots for evidence.
+
+### Testpilot screenshot requires a restored 1C window (2026-11-11)
+
+- `get_screenshot` returned `screenshot_window_minimized` after a successful lab4 query.
+- The client was minimized; restore its window before requesting a screenshot. Protocol form actions still work while minimized.
+
+### Sandboxed Designer cannot access its user profile (2026-11-11)
+
+- lab4 XML dump exited 1: access denied to `AppData/Roaming/1C/1cv8t/<uuid>`.
+- 1C requires its normal profile outside the workspace. Run the authorized Designer command with escalation.
+- `uv python list` also retries unwritable sandbox cache paths; avoid it or set a workspace cache directory.
+
+### Windows Python and database registry differ from the old host (2026-11-11)
+
+- The current `python` resolves to MSYS2 and has no `fitz`; `.v8-project.json` is absent.
+- The reference files describe a different host. Use available PDF tools or a verified Python interpreter, and pass the lab4 path and platform explicitly.
+- The bundled Python also lacks `fitz`, and bundled Poppler has no `pdftotext.exe`. Inspect installed packages/binaries before choosing the PDF extraction command.
+- Use bundled Python with `-X utf8`: it has `pypdf`, `pdfplumber`, `pypdfium2`, `PIL`, and `lxml`. Bare MSYS2 Python lacks `lxml`; default bundled stdout encoding is CP1251 and fails on some PDF characters.
+
 ### `uv tool install` refuses to replace an existing `1c-testpilot.exe` (2026-11-05)
 
 - `uv tool install "git+https://github.com/ROCTUP/1c-testpilot"` finished resolving and installing packages, then exited 1 with `error: Executable already exists: 1c-testpilot.exe (use --force to overwrite)`.

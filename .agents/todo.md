@@ -22,7 +22,7 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 - [ ] Add the Windows-MCP server when the Windows machine is set up (deliberately not in this repo yet). Same trip can close the `MCP_Toolkit` item.
 - [ ] Dump `lab1` configuration to `lab1/src` if it is going to be edited (no `src/` yet).
 - [ ] Confirm the `macos` MCP `Type` tool can enter text into the 1C login dialog (only `Shortcut`/`Click` were exercised).
-- [ ] Fill `lab4`–`lab8` when the coursework reaches them; add their PDFs to `labN/src/`.
+- [ ] Fill `lab5`–`lab8` when the coursework reaches them; add their PDFs to `labN/src/`.
 - [ ] Decide whether to keep `lab1` in the registry without credentials or add a user to the base.
 
 ## In Progress
@@ -30,6 +30,8 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 - [ ] (none)
 
 ## Done
+
+- [x] lab4 variant 16 (2026-11-11): preserved the existing lab3 configuration in `lab4`; added only processor `Запрос`, form `Форма`, spreadsheet `ТабДокумент`, command `Выполнить`, template `Результат`. Transcribed PDF pp. 19–24, adapted to `МИНИМУМ(ПроизводствоКопии.Стоимость)` per document and descending price per p. 31. Validators clean, `/CheckModules` exit 0, live output 4200 / 1500 / 0 matches all source rows, repeat execution clears output, screenshot checked. Round-trip comparison: 52 pre-existing files unchanged. Backup `lab4/evidence/before-lab4.dt`, final `lab4/lab4-variant16.dt`, verification evidence in `lab4/evidence/`. Test clients stopped. Existing document 00000000003 has date 1900-11-07 and zero prices; left unchanged.
 
 - [x] lab3 filled with lab2 data (2026-11-04): throwaway EPF `ПереносДанных` (scratchpad, not in repo) serialises constants, catalogs and documents of lab2 with `ЗаписатьXML` and reloads them into lab3 with the same refs, then reposts the 6 documents. Verified by re-export (byte-identical to the lab2 export) and by the `Цены` register: 21 records, no orphans. lab2 infobase users were not copied (lab3 keeps `admin`). Gotchas: `Структура`/`ФиксированнаяСтруктура` do not serialise to XML, subordinate registers cannot be cleared without a recorder filter, the EPF security dialog needs a click per fresh build.
 

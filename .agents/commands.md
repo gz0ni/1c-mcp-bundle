@@ -85,6 +85,7 @@ Measured 2026-11-02: `accessibility: granted`, `screen_recording: granted`; the 
 - lab1: no `/N` (no users in the base).
 - lab2: `/N админ` (Cyrillic).
 - lab3: `/N admin` (Latin).
+- lab4 (Windows, 2026-11-11): `/N admin` (Latin), empty password omitted. Use explicit `-InfoBasePath D:/Work/1C/lab4` and `-V8Path` resolved from the installed 8.3.27.1508 platform. The XML dump is `lab4/src`; verified final export is `lab4/lab4-variant16.dt`.
 
 Never pass `/P ""` — see `.agents/gotchas.md`.
 

@@ -17,6 +17,12 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 
 <!-- New entries go here, newest first. -->
 
+### Lab4 continues the supplied lab3 base (2026-11-11)
+
+- Decision: preserve all existing lab4 objects and data; add only the query processor from PDF pp. 19–24 and variant 16 on p. 31.
+- Reason: p. 26 explicitly requires the previous labs' result, so restoring lab2 is unnecessary.
+- Consequences: the variant's price uses the existing `Стоимость` attribute, output alias `Цена`; aggregation is minimum per document, sorted descending. Earlier lab code and pre-existing test data are outside this change.
+
 ### Desktop automation on macOS stays with the `macos` MCP (2026-11-02)
 
 - Decision: skip `agent-desktop` on the macOS host; 1C desktop input continues through `macos` MCP (Snapshot/Click/Type/Shortcut) plus screenshots.

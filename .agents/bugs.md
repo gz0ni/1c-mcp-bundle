@@ -17,6 +17,13 @@ Known bugs found in this project and how they were fixed, so they do not reappea
 
 <!-- New entries go here, newest first. -->
 
+### Lab4 generated spreadsheet had narrow columns and full-row borders (2026-11-11) — fixed
+
+- Symptom: correct query values were clipped and cell borders continued across unused columns.
+- Root cause: MXL DSL widths are absolute units; `rowStyle` formats the entire row.
+- Fix: explicit 352/100 column widths and borders on the two cells only.
+- Prevention: inspect the live Enterprise screenshot; XML/module validation alone cannot prove layout. Final screenshot and text-fit check passed.
+
 ### lab2/lab3 hang in designer and test client (2026-10-24) — fixed
 
 - Symptom: `DESIGNER /F.../lab2` and `launch_client(profile="lab3")` never returned; no window, ~1% CPU, `1Cv8.1CD` held open. A copy of lab3 in a temp directory behaved the same, so it was not a path or lock issue.
