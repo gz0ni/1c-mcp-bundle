@@ -16,6 +16,23 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### python-docx reserializes untouched template parts (2026-11-11)
+
+- Lab4 report package comparison detected changes in root relationships, footer, settings and styles after saving the reference-derived copy.
+- Restore preserve-only ZIP members byte-for-byte from the retained reference after authoring; keep only intended document, new-image relationship and core-title changes. Recheck package fidelity before delivery.
+
+### Computer Use GPU capture failed in the Configurator (2026-11-11)
+
+- `sky.get_window_state` failed at Direct3D11 frame capture with `0x887A0005` (GPU device removed).
+- Re-select the live window and retry once; if persistent, switch the capture/control provider instead of reusing stale screenshot coordinates.
+- The GPU error persisted in both Sky providers. The global agent-desktop CLI can still save screenshots and list windows, although the old default state root fails private-file DACL checks. Its documented `AGENT_DESKTOP_HOME` relocation to a fresh task-local directory restores ref snapshots without changing old permissions. Explicit `focus-window` succeeded before headed keyboard input; `press --headed` alone had failed to acquire foreground focus.
+
+### DOCX renderer requires unavailable LibreOffice on this Windows host (2026-11-11)
+
+- `render_docx.py` failed because `soffice.exe` is not installed; sandbox temp cleanup also returned access denied.
+- Microsoft Word is installed. Use a read-only native Word COM PDF export and bundled pypdfium2 to render page images; do not modify the reference DOCX during conversion.
+- Word COM misinterprets paths with forward slashes and spaces as URLs. Normalize both paths to absolute Windows backslash paths before `Documents.Open` or PDF export.
+
 ### Testpilot command catalogue cannot inspect every section menu (2026-11-11)
 
 - First catalogue search requires an unfiltered scan or `refresh=true`. On lab4 the scan then returned `menu_state_unavailable` for the Main section and no commands.
@@ -343,3 +360,45 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 - `timeout 120 python ...` → `command not found: timeout`.
 - Root cause: GNU coreutils are not installed by default.
 - Avoid: use `gtimeout` (coreutils) or a manual `for` loop with `kill -0`.
+
+### Workspace journal writes and process inventory need escalation (2026-11-11)
+
+- Lab5 preflight: sandboxed Add-Content to .agents/todo.md returned access denied; Get-CimInstance could not access CIM.
+- Use an authorized escalated call for journal maintenance and process inventory. PDF rendering within lab5 works without escalation.
+
+
+### Lab5 test fixture assumed a document attribute (2026-11-11)
+
+- The external test failed before posting: object field ОбщаяСумма was absent.
+- Read the actual metadata attribute names before building fixtures. This was a test harness error, not an application failure; transaction rollback kept fixtures out of the base.
+
+
+### Lab5 inherited price register rejects duplicate copy rows (2026-11-11)
+
+- A successful-payment fixture with two rows for the same copy failed with duplicate keys in Цены (period, copy, copy type).
+- The inherited lab3 price handler creates one register row per document row. Do not rewrite that handler outside the lab5 methodichka scope. Verify duplicate requested quantities through the stock-refusal path; use distinct copies for successful multi-row payment verification.
+- The initial receipt-total assertion was later traced to the test query omitting the document dimension; see the resolved virtual-table entry below.
+
+
+### Balance virtual table omits unused dimensions (2026-11-11)
+
+- The first lab5 fixture counted balance rows without selecting ДокументВзаиморасчетов; the platform aggregated them and the expected two-document assertion failed.
+- Select the document dimension explicitly when verifying party detail, then total the returned rows. Application receipt quantities were correct; this failure was in the test query.
+
+
+### Large inline screenshot payloads fail shell launch (2026-11-11)
+
+- Saving Testpilot PNG data as a large inline PowerShell command returned an MXC packaged-app launcher error; no image file was written.
+- Write the base64 payload to a workspace file with apply_patch, then decode via a short shell command. A test-client Table also refuses field get_text; use tc_table read_rows.
+
+
+### Direct GUI launch does not provide a reliable batch wait (2026-11-11)
+
+- The direct PowerShell invocation of 1cv8t /CheckModules returned before an output log existed (subsequent Get-Content exit 1).
+- Use Start-Process -Wait -PassThru with separate /Out argument and explicit quoting; verify process exit and the log before claiming module validation.
+
+
+### meta-compile emits empty register record-set modules (2026-11-11)
+
+- Lab5 scope verification expected only two new XML files, but the platform round-trip also included two generated RecordSetModule.bsl files.
+- Inspect the modules, require them to be empty, and include them in the expected generated file set. These are not extra application handlers.

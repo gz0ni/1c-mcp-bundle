@@ -22,7 +22,7 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 - [ ] Add the Windows-MCP server when the Windows machine is set up (deliberately not in this repo yet). Same trip can close the `MCP_Toolkit` item.
 - [ ] Dump `lab1` configuration to `lab1/src` if it is going to be edited (no `src/` yet).
 - [ ] Confirm the `macos` MCP `Type` tool can enter text into the 1C login dialog (only `Shortcut`/`Click` were exercised).
-- [ ] Fill `lab5`–`lab8` when the coursework reaches them; add their PDFs to `labN/src/`.
+- [ ] Fill `lab6`–`lab8` when the coursework reaches them; add their PDFs to `labN/src/`.
 - [ ] Decide whether to keep `lab1` in the registry without credentials or add a user to the base.
 
 ## In Progress
@@ -30,6 +30,8 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 - [ ] (none)
 
 ## Done
+
+- [x] lab4 report (2026-11-11): created `D:/Homework/3 курс/1/1с/4/1C_ЛР№4_Зуев_Вар16.docx` from the user's lab3 DOCX. Preserved title furniture, student, teacher, styles, section geometry and footer. Replaced body with variant16 goal/domain, actual Configurator and Enterprise screenshots (6 figures), full unchanged form module and conclusions. Native Word render: 10 pages, all inspected. Cover pixels unchanged outside the edited number/subject; preserve-only ZIP parts byte-identical; module listing verified. Work and QA evidence: `lab4/report-work/`. Configurator closed without changes.
 
 - [x] lab4 query navigation (2026-11-11): at the user's explicit request added `DataProcessor.Запрос` to `Subsystem.Заказы`. Verified clicking Orders, the visible Service > Query command, and Execute; current data returned 4200 / 1500 without error. Only `Subsystems/Заказы.xml` changed apart from platform ConfigDumpInfo; processor code is unchanged. Saved `query-navigation.png`, refreshed `query-result.png` and `lab4/lab4-variant16.dt`, stopped the test client.
 
@@ -69,3 +71,12 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 - [x] Install `agent-desktop` 1.0.2 project-local for the Windows host (`npm run setup` links the native binary) and its two skills into `.agents/skills/`. Verified: `status` reports accessibility granted, snapshot on Calculator returned 56 refs, `click` on `Семь` moved the display to `7`.
 - [x] Probe `agent-desktop` on the macOS host. **2026-11-02 — fail, skipped.** Thin client from a bare binary: `ref_count` 3 (Close/Minimize/Full Screen, English names). Thick client from the bundle: `snapshot` → `TIMEOUT` / `global_window_inventory_unstable`, window absent from `list-windows`. 1C publishes no AX tree on macOS, so `macos` MCP stays the input path there.
 - [x] Confirm the `agent-desktop` UIA tree for a live 1C client on Windows. 2026-11-02 on the lab1 configurator: 73-99 refs, readable Russian names, menus and the configuration tree are exposed, but tree nodes only advertise `SetFocus` and their `Expand`/`Click` return `E_NOTIMPL`. Semantic clicks work on window chrome; the tree has to be driven with `press` and `--headed` mouse.
+
+## Lab5 variant 16 (2026-11-11)
+
+- [x] Read the methodichka including screenshots and confirm the lab4 baseline in lab5.
+- [x] Back up lab5; implement only the methodichka requirements for variant 16.
+- [x] Validate XML/modules and exercise the lab5 behavior in the live client; export the final database.
+
+
+- [x] Lab5 variant16 verified: two accumulation registers and printed posting handlers (PDF pp. 8–12,21); 6 behavioral scenarios PASS, native module check exit0, UI shortage message confirmed. Existing documents reposted: 6 receipt rows / 4 payment rows. Scope comparison: 55 existing files byte-identical, 5 expected existing files changed, 2 registers plus empty generated modules added. Final `lab5/lab5-variant16.dt`; backup and evidence in `lab5/evidence/`. Test clients stopped. See `lab5/evidence/verification.md` for inherited price-handler limitations and the exact lab5 scope.

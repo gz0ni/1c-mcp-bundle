@@ -72,3 +72,9 @@ Known bugs found in this project and how they were fixed, so they do not reappea
 - Root cause: by design the script only reads `v8path` / `v8args` from `.v8-project.json`; base selection is the agent's job per `SKILL.md`.
 - Fix applied: none; pass `-InfoBasePath` and `-UserName` explicitly.
 - Prevent: read `.v8-project.json` first and build the arguments from it.
+
+### Inherited price handler rejects duplicate copies in successful payment (2026-11-11) — open
+
+- A payment with two rows for the same copy can fail with duplicate keys in `Цены` (period, copy, copy type).
+- The original handler writes each document row directly; this behavior exists before lab5. The new shortage check correctly aggregates requested quantities, but does not replace the price handler.
+- Preserved to respect the methodichka-only scope. Successful demonstrations use one row per copy. Any deduplication change needs a methodichka-backed requirement or explicit user scope expansion.

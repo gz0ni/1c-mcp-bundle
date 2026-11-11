@@ -250,3 +250,11 @@ None. The repository has no workflows.
 ## Tests
 
 None. Skills are verified by running them against `lab1`–`lab3`; there is no test suite.
+
+## Lab5 on Windows (2026-11-11)
+
+- Base: `D:/Work/1C/lab5`, user `admin` (Latin), empty password omitted; platform 8.3.27.1508.
+- Use the verified Python db-* skills with explicit `-InfoBasePath`, `-UserName`, `-V8Path`.
+- Native `/CheckModules`: Start-Process -Wait -PassThru, separate quoted `/Out` argument; expect exit0 and `Синтаксических ошибок не обнаружено!`.
+- Sources: `lab5/src`; backup: `lab5/evidence/before-lab5.dt`; final: `lab5/lab5-variant16.dt`.
+- Scope check: bundled Python `-X utf8 lab5/evidence/verify-scope.py`. Behavior-test source and instructions: `lab5/evidence/verification.md`.

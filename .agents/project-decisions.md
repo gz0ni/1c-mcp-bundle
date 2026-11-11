@@ -17,6 +17,12 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 
 <!-- New entries go here, newest first. -->
 
+### Preserve the user's lab3 DOCX layout for the lab4 report (2026-11-11)
+
+- Decision: use the supplied lab3 report as the layout authority; replace only its lab number, subject and body content.
+- Reason: the user explicitly asked to retain the student, teacher and report formatting. Generic thesis numbering/layout rules do not override that request.
+- Consequences: title text boxes, margins, styles and footer convention remain unchanged. New actual screenshots are cropped with native Word picture formatting for legibility; source screenshot bytes are retained. Native Word PDF export provides visual QA because LibreOffice is unavailable on this host.
+
 ### Expose the existing lab4 processor in Orders (2026-11-11)
 
 - Decision: add `DataProcessor.Запрос` to the existing `Заказы` subsystem.
@@ -134,3 +140,10 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 - Reason: shared across all projects; the user explicitly asked not to touch them.
 - Alternatives considered: none.
 - Consequences: workspace-specific rules must live in this repo's `AGENTS.md` / `.agents/`.
+
+### Lab5 follows the printed register and posting algorithm (2026-11-11)
+
+- Decision: use existing lab4 in lab5; add only `ОстаткиПроизводств` and `Оплаты`, receipt movements, grouped stock check and turnover movements from PDF figures 2.1–2.9 and variant16 on p.21.
+- Reason: screenshots place quantity/amount under Resources, despite the prose calling them attributes. No expense movements or FIFO/LIFO algorithm is printed in this lab, so no such functionality was invented.
+- Preserved all existing forms, role IDs and inherited code, including the user-added copy-type column. Reposted the two existing production/payment documents to populate new registers. No lab3 import.
+- Verification and limitations: `lab5/evidence/verification.md`; final DT `lab5/lab5-variant16.dt`.
