@@ -147,3 +147,9 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 - Reason: screenshots place quantity/amount under Resources, despite the prose calling them attributes. No expense movements or FIFO/LIFO algorithm is printed in this lab, so no such functionality was invented.
 - Preserved all existing forms, role IDs and inherited code, including the user-added copy-type column. Reposted the two existing production/payment documents to populate new registers. No lab3 import.
 - Verification and limitations: `lab5/evidence/verification.md`; final DT `lab5/lab5-variant16.dt`.
+
+### Preserve the supplied lab4 report for lab5 (2026-11-11)
+
+- Decision: derive the lab5 DOCX from the user-supplied lab4 DOCX, preserving student, teacher, cover layout, direct paragraph formatting, styles, section geometry and footer.
+- Reason: the user explicitly requested the same example, student and teacher. Two-line lab5 subject replaces the previous subject plus its blank line, preserving cover height.
+- Evidence: native Word render, 13 inspected pages, 8 genuine screenshots, exact source module listings and package/pixel fidelity checks in `lab5/report-work/`. Only final DOCX copied to the requested Homework/5 folder.

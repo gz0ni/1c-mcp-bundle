@@ -402,3 +402,37 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 - Lab5 scope verification expected only two new XML files, but the platform round-trip also included two generated RecordSetModule.bsl files.
 - Inspect the modules, require them to be empty, and include them in the expected generated file set. These are not extra application handlers.
+
+### PowerShell splits unquoted coordinate pairs (2026-11-11)
+
+- agent-desktop mouse-click --xy 112,419 returned INVALID_ARGS because PowerShell split the pair into separate arguments.
+- Quote --xy coordinate pairs, for example '112,419'. No mouse event was delivered; reobserve before any dependent input.
+
+
+### Configurator context menu has no menu surface root (2026-11-11)
+
+- agent-desktop snapshot --surface menu returned WINDOW_NOT_FOUND while a classic 1C context menu was open.
+- Read the owning window or take its screenshot; do not assume that the menu failed to open.
+
+
+### Guard snapshot success before selecting a ref (2026-11-11)
+
+- The report capture cleanup script indexed a null snapshot tree and sent an empty click ref (INVALID_ARGS; no delivery).
+- Check ok/tree before selecting controls, then read the live window inventory if the expected app is absent.
+
+
+### Configurator close buttons have duplicate accessibility identities (2026-11-11)
+
+- A fresh main-window Close ref returned AMBIGUOUS_TARGET identity_not_unique while module child windows were open.
+- Use the main window's observed top-right screen coordinate when physical input is authorized; no close was delivered by the rejected semantic click.
+
+
+### Report screenshot crops need a rendered readability pass (2026-11-11)
+
+- Lab5 first DOCX render made the wide register lists and shortage message too small; a tighter code crop clipped the beginning of the final procedure terminator.
+- Keep source screenshot bytes, use native Word crop rectangles to enlarge relevant columns/messages, and include the left edge of every code line. Inspect the final rendered pages after crop changes.
+
+### Trailing blank journal line fails git diff check (2026-11-11)
+
+- The report journal append left an extra blank line at EOF; git diff --check returned exit 1.
+- Normalize the final newline before staging Markdown journals.

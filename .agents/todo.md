@@ -80,3 +80,12 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 
 
 - [x] Lab5 variant16 verified: two accumulation registers and printed posting handlers (PDF pp. 8–12,21); 6 behavioral scenarios PASS, native module check exit0, UI shortage message confirmed. Existing documents reposted: 6 receipt rows / 4 payment rows. Scope comparison: 55 existing files byte-identical, 5 expected existing files changed, 2 registers plus empty generated modules added. Final `lab5/lab5-variant16.dt`; backup and evidence in `lab5/evidence/`. Test clients stopped. See `lab5/evidence/verification.md` for inherited price-handler limitations and the exact lab5 scope.
+
+## Lab5 report (2026-11-11)
+
+- [x] Create variant16 DOCX in the requested Homework/5 folder from the supplied lab4 reference; preserve student, teacher, cover and formatting.
+- [x] Capture actual Configurator metadata/code, include verified Enterprise evidence and unchanged module listings.
+- [x] Render every page with native Word, inspect and verify source/template fidelity before delivery.
+
+
+- [x] Lab5 report delivered: `D:/Homework/3 курс/1/1с/5/1C_ЛР№5_Зуев_Вар16.docx`. 13 native-Word-rendered pages, 8 actual screenshots, 2 complete unchanged object modules. Same student/teacher, section geometry, styles and footer; cover pixels unchanged outside lab number/subject. Preserve-only ZIP parts byte-identical, source reference unchanged, delivered hash verified. QA: `lab5/report-work/final-qa.json`. Configurator closed without changes.
