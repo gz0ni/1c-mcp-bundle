@@ -63,19 +63,6 @@ macOS result (2026-11-02): the form opens, both security dialogs have to be acce
 button then logs `Не удалось подключить внешнюю компоненту MCPHttp` — the add-in is a Windows PE DLL.
 Do not debug the port on macOS.
 
-## Desktop probe with agent-desktop (macOS)
-
-```bash
-cd /Users/gz0ni/Documents/Work/Languages/1c
-npx -y agent-desktop status
-npx -y agent-desktop list-apps
-npx -y agent-desktop snapshot --app 1cv8c -i --compact   # thin client, bare binary
-```
-
-Measured 2026-11-02: `accessibility: granted`, `screen_recording: granted`; the thin client exposes
-`ref_count: 3` (Close / Minimize / Full Screen only); the thick client started from the bundle makes
-`snapshot` time out with `global_window_inventory_unstable`. Verdict: fail, keep the `macos` MCP.
-
 ## Open a base in the designer (GUI)
 
 ```bash
@@ -174,64 +161,9 @@ macos.Shortcut(shortcut="return")
 
 Coordinates are logical points (screen is 1470×956 logical on this Mac).
 
-## Desktop automation (Windows, agent-desktop)
+## Desktop automation (Windows)
 
-Project-local install: `npm install` writes `node_modules/`, `npm run setup` links the native
-binary. Only the Windows x64 binary is used here; the package ships every platform.
-
-```powershell
-cd C:\Users\user\.local\share\opencode\worktree\3f005b\clever-squid
-
-.\node_modules\.bin\agent-desktop.cmd status        # platform, permissions, supported_surfaces
-.\node_modules\.bin\agent-desktop.cmd list-apps     # running apps, exact process names
-.\node_modules\.bin\agent-desktop.cmd list-windows  # windows with ids, bounds, titles
-
-# Observe, then act on a ref from that same snapshot
-.\node_modules\.bin\agent-desktop.cmd snapshot --app CalculatorApp.exe -i --compact
-.\node_modules\.bin\agent-desktop.cmd find --app CalculatorApp.exe --name "Отображать как 7" --exact
-.\node_modules\.bin\agent-desktop.cmd click '@sa94te7klsw45:e53'
-.\node_modules\.bin\agent-desktop.cmd snapshot --app CalculatorApp.exe -i --compact   # verify
-```
-
-- `status` on Windows reports `accessibility: granted`, `screen_recording: not_required`. No
-  TCC-style dialog exists.
-- Quote every ref in PowerShell (`'@sa94te7klsw45:e53'`); a bare `@token` is the splatting
-  operator and the argument is dropped, producing `INVALID_ARGS`.
-- Refs expire with the snapshot. After any UI change, re-snapshot or use `find`.
-- `--app` takes the process name from `list-apps` (`Notepad.exe`, `CalculatorApp.exe`), not a
-  window title.
-- `launch` accepts an absolute path or a bare name that exists under `System32` / the Windows
-  directory (`notepad`, `calc`). `mspaint` is not resolvable that way.
-- `click`, `set-value`, `select`, `toggle`, `check`, `scroll` are semantic and headless.
-  `type`, `right-click`, `double-click`, `focus` need `--headed` (they synthesize input).
-- Verified 2026-11-02 on Windows 11: `snapshot` on Calculator returned 56 refs with Russian
-  names; `click` on `Семь` changed the display to `7`.
-
-### 1C configurator on Windows
-
-```powershell
-[Console]::OutputEncoding=[Text.Encoding]::UTF8
-$exe = (Get-ChildItem D:\Rubbish -Recurse -Depth 6 -Filter 1cv8t.exe | Select-Object -First 1).FullName
-Start-Process $exe -ArgumentList 'DESIGNER','/F"D:\Work\1C\lab1"','/DisableStartupDialogs'
-
-cmd /c ".\node_modules\.bin\agent-desktop.cmd snapshot --app 1cv8t.exe -i --compact > %TEMP%\snap1c.json"
-.\node_modules\.bin\agent-desktop.cmd press --app 1cv8t.exe right --headed   # expand a tree node
-.\node_modules\.bin\agent-desktop.cmd click '@<snapshot>:e5'                 # window chrome: works
-```
-
-- The lab1 configurator yields 73 refs: main menu, both toolbars, the configuration tree and the
-  status bar, all with readable Russian names.
-- Configuration-tree nodes are read-only in UIA: `click` returns `POLICY_DENIED`, `expand`/`focus`
-  return `ACTION_FAILED` (`0x80004001`). Use `press` (`down`, `right`, `left`) plus `--headed`
-  mouse, and re-snapshot to confirm.
-- Window buttons (`Свернуть`, `Восстановить`, `Закрыть`) do expose `Click` and work headless;
-  `Закрыть` closed the designer with no save prompt on an unmodified configuration.
-- The installed platform here is 8.3.27.1508 (portable, `D:\Rubbish\...`) plus an 8.5.1.1150
-  training build under `C:\Program Files (x86)\1cv8t`. Use 8.3.27 to match the bases.
-
-The two skills are installed into `.agents/skills/agent-desktop` and
-`.agents/skills/agent-desktop-windows`; every command also serves its own docs:
-`agent-desktop skills get desktop` and `agent-desktop skills get platform`.
+Use the built-in Codex computer-use tool for desktop input.
 
 ## Verification
 

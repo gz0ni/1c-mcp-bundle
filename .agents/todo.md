@@ -31,6 +31,8 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 
 ## Done
 
+- [x] Remove the project-local desktop CLI and its bundled skills. Use Codex computer use for Windows desktop input.
+
 - [x] Remove the project-scoped `macos` MCP from Codex (2026-11-18) at the user's request. Use Codex desktop controls for general UI interactions.
 
 - [x] Configure project-scoped Codex MCP servers (2026-11-18): verified scope with `codex mcp list --json` and MCP handshakes for `1c-testpilot` (11 tools) and `macos` (12 tools). Keep the known Windows-only `1c-toolkit` disabled on macOS.
