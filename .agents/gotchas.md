@@ -16,6 +16,10 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 <!-- New entries go here, newest first. -->
 
+### First macOS MCP startup can exceed the default Codex timeout (2026-11-18)
+
+- `uvx` needed to download a missing dependency, and the 12-second startup probe timed out. The warm MCP handshake succeeded with a longer deadline.
+- Allow 40 seconds for startup. A sandboxed shell cannot write the user uv cache, so a cache error there is not a server configuration failure.
 ### python-docx reserializes untouched template parts (2026-11-11)
 
 - Lab4 report package comparison detected changes in root relationships, footer, settings and styles after saving the reference-derived copy.

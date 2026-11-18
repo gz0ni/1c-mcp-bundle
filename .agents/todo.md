@@ -31,6 +31,9 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 
 ## Done
 
+- [x] Remove the project-scoped `macos` MCP from Codex (2026-11-18) at the user's request. Use Codex desktop controls for general UI interactions.
+
+- [x] Configure project-scoped Codex MCP servers (2026-11-18): verified scope with `codex mcp list --json` and MCP handshakes for `1c-testpilot` (11 tools) and `macos` (12 tools). Keep the known Windows-only `1c-toolkit` disabled on macOS.
 - [x] lab4 report (2026-11-11): created `D:/Homework/3 курс/1/1с/4/1C_ЛР№4_Зуев_Вар16.docx` from the user's lab3 DOCX. Preserved title furniture, student, teacher, styles, section geometry and footer. Replaced body with variant16 goal/domain, actual Configurator and Enterprise screenshots (6 figures), full unchanged form module and conclusions. Native Word render: 10 pages, all inspected. Cover pixels unchanged outside the edited number/subject; preserve-only ZIP parts byte-identical; module listing verified. Work and QA evidence: `lab4/report-work/`. Configurator closed without changes.
 
 - [x] lab4 query navigation (2026-11-11): at the user's explicit request added `DataProcessor.Запрос` to `Subsystem.Заказы`. Verified clicking Orders, the visible Service > Query command, and Execute; current data returned 4200 / 1500 without error. Only `Subsystems/Заказы.xml` changed apart from platform ConfigDumpInfo; processor code is unchanged. Saved `query-navigation.png`, refreshed `query-result.png` and `lab4/lab4-variant16.dt`, stopped the test client.
