@@ -94,3 +94,30 @@ Task checklist. The agent maintains this file: creates items, marks them done, k
 
 
 - [x] Lab5 report delivered: `D:/Homework/3 курс/1/1с/5/1C_ЛР№5_Зуев_Вар16.docx`. 13 native-Word-rendered pages, 8 actual screenshots, 2 complete unchanged object modules. Same student/teacher, section geometry, styles and footer; cover pixels unchanged outside lab number/subject. Preserve-only ZIP parts byte-identical, source reference unchanged, delivered hash verified. QA: `lab5/report-work/final-qa.json`. Configurator closed without changes.
+
+## Lab5 copy type dimension (2026-11-21)
+
+- [x] Add the new dimension, populate it during production posting and include it in the payment balance query.
+- [x] Back up the original database and fill the type for all six existing movements.
+- [x] Verify type separation on the test copy and run the module check and XML round-trip on the live base.
+
+## Lab5 payment copy types (2026-11-21)
+
+- [x] Add the payment row type and remove the fixed type from the form, movements and stock check.
+- [x] Back up lab5 and backfill six historical payment rows without reposting.
+- [x] Verify mixed-type payment, shortage detection, form validation and live syntax checks.
+
+## Lab5 Designer blank window (2026-11-21)
+
+- [x] Reproduce on independent copies and verify an XML dump.
+- [x] Back up the shared layout and verify the live lab5 window after reset.
+
+## Lab5 production stock expense (2026-11-21)
+
+- [x] Add expense postings from payments with a stock check and lot allocation.
+- [x] Reproduce and verify the excess-payment scenario and both policy strategies on a copy.
+- [x] Back up and update lab5, run the native module check and inspect the live XML export.
+
+## Lab5 payment listing formatting (2026-11-21)
+
+- [x] Match the methodichka comments and query indentation, confirm formatting-only differences, and rerun posting and module checks.

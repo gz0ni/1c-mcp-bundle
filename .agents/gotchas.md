@@ -440,3 +440,14 @@ Traps and pitfalls the agent has stepped on in this project. Log a gotcha immedi
 
 - The report journal append left an extra blank line at EOF; git diff --check returned exit 1.
 - Normalize the final newline before staging Markdown journals.
+
+### macOS Designer startup and lab5 verification (2026-11-21)
+
+- A sandboxed Designer launch aborted with a wxWidgets assertion. An escalated launch used the normal 1C profile. An existing Designer session delayed the live dump, so use a temporary base copy for analysis until the original session closes.
+- A server procedure called directly from the managed application module was unavailable at runtime despite a clean default module check. Use a managed form server handler and consult the 1C event log for client startup errors.
+- Searching the production tabular section by the movement's line number did not find a source row. The one-time migration matched copy, quantity and sum and checked that all matches agreed on type. Verify mappings on a copy first.
+
+### A saved macOS Designer layout can hide the entire interface (2026-11-21)
+
+- Designer 8.3.27.1606 showed a blank window on lab5, a fresh copy of lab5 and a lab1 copy. Authentication and the lab5 XML dump succeeded. The main GUI event loop was idle.
+- Closing the diagnostic instances and renaming `~/.1cv8t/1C/1cv8t/1cv8cmn.pfl` restored the menus, toolbars and configuration tree. Keep a backup of the original profile file and avoid changing the database or the base list.

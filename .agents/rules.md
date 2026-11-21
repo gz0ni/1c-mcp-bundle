@@ -8,6 +8,7 @@ Coding, testing, and workflow conventions specific to this project. Static rules
 - Location: `labN/src/*.pdf` (e.g. `lab3/src/Лабораторная работа №3 (2022-2023).pdf`). They are intentionally not versioned — `lab*/` is gitignored.
 - **Code in these PDFs is images, not text.** `pdftotext` returns zero `Процедура` / `Функция` matches; the listings are screenshots. Render the page to PNG and read it with vision.
 - Reproduce the printed code as the starting point: same structure, same order, same logic.
+- Preserve the comments and query indentation shown in the methodichka. Adapt object names in those comments for the variant. Add other comments only when the user requests them.
 - **Allowed deviations** (still anchored to the methodichka):
   - renames required by the variant — procedure, function, variable, object names;
   - literal and value changes required by the variant;

@@ -153,3 +153,26 @@ Recorded decisions and the reasoning behind them, so future work does not silent
 - Decision: derive the lab5 DOCX from the user-supplied lab4 DOCX, preserving student, teacher, cover layout, direct paragraph formatting, styles, section geometry and footer.
 - Reason: the user explicitly requested the same example, student and teacher. Two-line lab5 subject replaces the previous subject plus its blank line, preserving cover height.
 - Evidence: native Word render, 13 inspected pages, 8 genuine screenshots, exact source module listings and package/pixel fidelity checks in `lab5/report-work/`. Only final DOCX copied to the requested Homework/5 folder.
+
+### Lab5 balances include the copy type (2026-11-21)
+
+- Decision: add `ТипыКопии` to `ОстаткиПроизводств` using `EnumRef.ТипыКопий`. Populate the dimension from the production row and use it in the balance filter, join and grouping. Payment uses its existing `ВанГог` type.
+- Reason: the user requested a separate balance dimension and corresponding join. The existing payment price selection already determines the type.
+- Evidence: six historical movements updated from source rows. The test database refused payment for three Van Gogh copies when two Van Gogh and ten Rembrandt copies were in stock. Payment for two passed. Final live module check passed.
+
+### Payment copy type comes from each row (2026-11-21)
+
+- Decision: add required `ТипКопий` to `Оплата.Копии`, bind it to the form, use it for price lookup and price movements, and filter and join balances by the copy/type pair.
+- Reason: the user requested removing the constant payment type from posting and the balance query. Backfill the six historical rows with the former fixed type to preserve their meaning without reposting.
+- Evidence: a mixed-type payment posted on a test copy with distinct price movements; a shortage was reported for the insufficient type only. The live migration, form validation, module check and configuration round-trip passed.
+
+### Reset only the shared Designer layout to recover the interface (2026-11-21)
+
+- Decision: preserve `1cv8cmn.pfl` under a backup name and let 1C load its default layout.
+- Reason: independent base copies showed the same blank window while Designer could still read the configuration. A live restart confirmed that the layout reset restored the interface.
+
+### Lab5 payment consumes production lots (2026-11-21)
+
+- Decision: adapt lab6 figures 2.1 and 2.3 for expense postings by copy and type. Lock the requested pairs, check balances at the payment moment, and consume lot quantities and amounts in the accounting policy order. FIFO is the default when no strategy is set.
+- Scope: existing posted payments were not reposted. The change updates the payment object module and its register list.
+- Evidence: red/green client test on a temporary database. Two out of two posted, the next one was refused, and FIFO, LIFO, separate types, repost and unpost passed. Live module check and export confirmed the changes.

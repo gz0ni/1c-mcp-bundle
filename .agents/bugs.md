@@ -78,3 +78,15 @@ Known bugs found in this project and how they were fixed, so they do not reappea
 - A payment with two rows for the same copy can fail with duplicate keys in `Цены` (period, copy, copy type).
 - The original handler writes each document row directly; this behavior exists before lab5. The new shortage check correctly aggregates requested quantities, but does not replace the price handler.
 - Preserved to respect the methodichka-only scope. Successful demonstrations use one row per copy. Any deduplication change needs a methodichka-backed requirement or explicit user scope expansion.
+
+### Production price movements used the enumeration manager (2026-11-21)
+
+- Status: fixed in lab5. The production posting handler now assigns the selected row value to the price register dimension. Posting verified with two types of the same copy in one production document.
+
+### Blank macOS Designer window (2026-11-21)
+
+- Status: fixed. The shared Designer layout file caused the blank window across multiple bases. Menus and the configuration tree were verified in a live lab5 window after the layout reset.
+
+### Payment left stock available for repeated posting (2026-11-21)
+
+- Status: fixed for new and reposted payments in lab5. A regression test reproduced successful posting of a third unit after payment for both available units. The same test now checks the shortage refusal and lot movements.
